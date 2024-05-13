@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Waterly",
+    "slug": "water-management",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,14 +16,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.aaffrrimps.mobile"
+      "bundleIdentifier": "com.aaffrrimps.waterManagement"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.aaffrrimps.mobile"
+      "package": "com.aaffrrimps.waterManagement"
     },
     "web": {
       "favicon": "./assets/favicon.png"
