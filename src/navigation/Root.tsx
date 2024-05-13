@@ -2,19 +2,26 @@ import { screenNames } from "@/constants";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabStack from "./TabStack";
+import AuthStack from "./AuthStack";
+import { useEffect, useState } from "react";
 const Stack = createStackNavigator();
 
 export default function RootStack() {
+  const [initialRouteName, setInitialRouteName] = useState<string>();
+  useEffect(() => {
+    // TODO: check if authenticated from a state and setInitialRouteName to Home if authenticated
+    setInitialRouteName(screenNames.auth.onboarding);
+  }, []);
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{
-        headerShown: false
-      }}>
-        <Stack.Screen
-          component={TabStack}
-          name={screenNames.tabs.main}
-        />
-        
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+        initialRouteName={initialRouteName}
+      >
+        <Stack.Screen name={screenNames.auth.main} component={AuthStack} />
+        <Stack.Screen component={TabStack} name={screenNames.tabs.main} />
       </Stack.Navigator>
     </NavigationContainer>
   );

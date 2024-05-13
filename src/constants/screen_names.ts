@@ -3,13 +3,21 @@ export const screenNames = {
     initialScreen: "home",
   },
   tabs: {
-    main: 'tabs',
-    initialTab: 'homeStack',
-    accoutsTab: 'accountStact'
+    main: "tabs",
+    initialTab: "homeStack",
+    accoutsTab: "accountStact",
   },
   accounts: {
-    main: 'account',
-    initialScreen: 'accountSceen'
-  }
-
+    main: "account",
+    initialScreen: "accountSceen",
+  },
+  auth: {
+    onboarding: "onboarding",
+    login: "login",
+    register: "register",
+    forgotPwd: "forgotPassword",
+    otp: "forgotPasswordOtp",
+    registerOtp: "registerOtp",
+    main: 'authStack'
+  },
 };

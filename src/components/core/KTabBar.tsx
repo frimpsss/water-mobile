@@ -62,9 +62,9 @@ const KTabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
                     color={!isFocused ? colors.mantis[900] : colors.mantis[400]}
                   />
                 );
-              case "Accounts":
+              case "Settings":
                 return (
-                  <Icons.User
+                  <Icons.Setting2
                     variant={isFocused ? "Bold" : "Linear"}
                     size={hp(25)}
                     // color={colors.mantis[400]}

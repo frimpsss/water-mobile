@@ -24,7 +24,7 @@ export default function TabStack() {
         component={AccountStack}
         name={screenNames.tabs.accoutsTab}
         options={{
-          title: "Accounts",
+          title: "Settings",
         }}
       />
       
