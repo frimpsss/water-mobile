@@ -21,7 +21,13 @@ export default function RootStack() {
         initialRouteName={initialRouteName}
       >
         <Stack.Screen name={screenNames.auth.main} component={AuthStack} />
-        <Stack.Screen component={TabStack} name={screenNames.tabs.main} />
+        <Stack.Screen
+          component={TabStack}
+          name={screenNames.tabs.main}
+          options={{
+            gestureEnabled: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

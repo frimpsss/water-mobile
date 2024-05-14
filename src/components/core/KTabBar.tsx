@@ -59,7 +59,7 @@ const KTabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
                   <Icons.Home
                     variant={isFocused ? "Bold" : "Linear"}
                     size={hp(25)}
-                    color={!isFocused ? colors.mantis[900] : colors.mantis[400]}
+                    color={!isFocused ? colors.mantis[900] : colors.mantis[950]}
                   />
                 );
               case "Settings":
@@ -68,14 +68,14 @@ const KTabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
                     variant={isFocused ? "Bold" : "Linear"}
                     size={hp(25)}
                     // color={colors.mantis[400]}
-                    color={!isFocused ? colors.mantis[900] : colors.mantis[400]}
+                    color={!isFocused ? colors.mantis[900] : colors.mantis[950]}
                   />
                 );
               default:
                 return (
                   <Icons.Additem
                     size={25}
-                    color={isFocused ? colors.mantis[900] : colors.mantis[400]}
+                    color={isFocused ? colors.mantis[900] : colors.mantis[950]}
                   />
                 );
             }
@@ -96,7 +96,7 @@ const KTabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
               <Text
                 style={{
                   fontSize: hp(14),
-                  color: isFocused ? colors.mantis[400] : colors.mantis[900],
+                  color: isFocused ? colors.mantis[950] : colors.mantis[900],
                   fontWeight: isFocused ? "500" : "300",
                   fontFamily: !isFocused
                     ? fonts.PoppinsLight

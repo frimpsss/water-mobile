@@ -3,9 +3,11 @@ import { screenNames } from "@/constants";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeStack from "./HomeStack";
 import AccountStack from "./AccountStack";
+import React from "react";
 const Tab = createBottomTabNavigator();
 
 export default function TabStack() {
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -20,14 +22,13 @@ export default function TabStack() {
           title: "Home",
         }}
       />
-            <Tab.Screen
+      <Tab.Screen
         component={AccountStack}
         name={screenNames.tabs.accoutsTab}
         options={{
           title: "Settings",
         }}
       />
-      
     </Tab.Navigator>
   );
 }
