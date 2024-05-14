@@ -12,10 +12,10 @@ interface props {
 const ScreenWithBackButton = ({ onBackClick, title, children }: props) => {
   return (
     <View style={styles.screen}>
-      <SafeAreaView edges={['top']}>
+      <SafeAreaView edges={["top"]}>
         <View style={styles.headerContainer}>
           <TouchableOpacity style={styles.iconContainer} onPress={onBackClick}>
-            <ArrowLeft color={colors.black[950]} />
+            <ArrowLeft color={colors.mantis[950]} />
           </TouchableOpacity>
 
           <Text style={[font_styles["h5"]]}>{title}</Text>
@@ -31,7 +31,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white[50],
     flex: 1,
   },
-  title: {},
+  title: {
+    color: colors.mantis[950],
+  },
   headerContainer: {
     paddingHorizontal: wp(sizes.MD),
     position: "relative",

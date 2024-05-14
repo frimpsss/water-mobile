@@ -1,8 +1,12 @@
 import { RootStack } from "@/navigation";
 import { StyleSheet, View } from "react-native";
-import { useFonts } from 'expo-font';
-import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect, useState } from "react";
+
+SplashScreen.preventAutoHideAsync();
 export default function App() {
+  const [appReady, setAppReady] = useState(false);
   const fonts = {
     PoppinsBlack: require("./assets/font/Poppins-Black.ttf"),
     PoppinsExtraBoldItalic: require("./assets/font/Poppins-ExtraBoldItalic.ttf"),
@@ -24,14 +28,22 @@ export default function App() {
     PoppinsThin: require("./assets/font/Poppins-Thin.ttf"),
   };
 
-  const [fontsLoaded, fontError] = useFonts(fonts);
-if (fontsLoaded)
-  return(
-    <View style={styles.container}>
-      <RootStack />
-      <StatusBar style="auto"/>
-    </View>
-  );
+  const [fontsLoaded] = useFonts(fonts);
+
+  useEffect(() => {
+    (async () => {
+      if (fontsLoaded && appReady) {
+        await SplashScreen.hideAsync();
+      }
+    })();
+  }, [fontsLoaded, appReady]);
+
+  if (fontsLoaded)
+    return (
+      <View style={styles.container} onLayout={() => setAppReady(true)}>
+        <RootStack />
+      </View>
+    );
 }
 
 const styles = StyleSheet.create({
