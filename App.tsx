@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
     return (
       <View style={styles.container} onLayout={() => setAppReady(true)}>
         <RootStack />
+        <StatusBar style="auto" />
       </View>
     );
 }

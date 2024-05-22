@@ -5,7 +5,9 @@ export const screenNames = {
   tabs: {
     main: "tabs",
     initialTab: "homeStack",
-    accoutsTab: "accountStact",
+    accoutsTab: "accountStack",
+    billing: "billingStack",
+    notification: "notificationStack",
   },
   accounts: {
     main: "account",
@@ -18,6 +20,12 @@ export const screenNames = {
     forgotPwd: "forgotPassword",
     otp: "forgotPasswordOtp",
     registerOtp: "registerOtp",
-    main: 'authStack'
+    main: "authStack",
+  },
+  billing: {
+    index: "billing_home",
+  },
+  notification: {
+    all: "notification_screen",
   },
 };

@@ -59,7 +59,7 @@ const KTabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
                   <Icons.Home
                     variant={isFocused ? "Bold" : "Linear"}
                     size={hp(25)}
-                    color={!isFocused ? colors.mantis[900] : colors.mantis[950]}
+                    color={!isFocused ? colors.black[300] : colors.mantis[950]}
                   />
                 );
               case "Settings":
@@ -68,14 +68,32 @@ const KTabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
                     variant={isFocused ? "Bold" : "Linear"}
                     size={hp(25)}
                     // color={colors.mantis[400]}
-                    color={!isFocused ? colors.mantis[900] : colors.mantis[950]}
+                    color={!isFocused ? colors.black[300] : colors.mantis[950]}
+                  />
+                );
+              case "Finance":
+                return (
+                  <Icons.TransactionMinus
+                    variant={isFocused ? "Bold" : "Linear"}
+                    size={hp(25)}
+                    // color={colors.mantis[400]}
+                    color={!isFocused ? colors.black[300] : colors.mantis[950]}
+                  />
+                );
+              case "Notification":
+                return (
+                  <Icons.NotificationBing
+                    variant={isFocused ? "Bold" : "Linear"}
+                    size={hp(25)}
+                    // color={colors.mantis[400]}
+                    color={!isFocused ? colors.black[300] : colors.mantis[950]}
                   />
                 );
               default:
                 return (
                   <Icons.Additem
                     size={25}
-                    color={isFocused ? colors.mantis[900] : colors.mantis[950]}
+                    color={isFocused ? colors.mantis[900] : colors.black[300]}
                   />
                 );
             }
@@ -96,7 +114,7 @@ const KTabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
               <Text
                 style={{
                   fontSize: hp(14),
-                  color: isFocused ? colors.mantis[950] : colors.mantis[900],
+                  color: isFocused ? colors.mantis[950] : colors.black[300],
                   fontWeight: isFocused ? "500" : "300",
                   fontFamily: !isFocused
                     ? fonts.PoppinsLight
