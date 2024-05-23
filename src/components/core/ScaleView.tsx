@@ -1,13 +1,20 @@
-import React, { useRef, useState } from 'react';
-import { TouchableOpacity, Animated, ViewStyle, StyleProp, Text } from 'react-native';
+import React, { useRef } from "react";
+import { Animated, ViewStyle, StyleProp } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface CustomAnimatedScaleProps {
   children: React.ReactNode;
   animatedScale?: number;
   extraStyles?: StyleProp<ViewStyle>;
+  action: () => void;
 }
 
-const CustomAnimatedScale: React.FC<CustomAnimatedScaleProps> = ({ children, animatedScale = 0.95, extraStyles }) => {
+const CustomAnimatedScale: React.FC<CustomAnimatedScaleProps> = ({
+  children,
+  animatedScale = 0.95,
+  extraStyles,
+  action,
+}) => {
   const scaleValue = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
@@ -30,17 +37,15 @@ const CustomAnimatedScale: React.FC<CustomAnimatedScaleProps> = ({ children, ani
     <TouchableOpacity
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
+      onPress={action}
+      style={[
+        {
+          transform: [{ scale: scaleValue }],
+        },
+        extraStyles,
+      ]}
     >
-      <Animated.View
-        style={[
-          {
-            transform: [{ scale: scaleValue }],
-          },
-          extraStyles,
-        ]}
-      >
-        {children}
-      </Animated.View>
+      {children}
     </TouchableOpacity>
   );
 };

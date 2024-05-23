@@ -13,12 +13,15 @@ const AuthActionButton = ({ title, bgColor, action, textColor }: props) => {
   return (
     <ScalingView
       animatedScale={0.95}
-      extraStyles={{ backgroundColor: bgColor, borderRadius: sizes.LG + 10 }}>
-      <Pressable onPress={action} style={[styles.btn]}>
-        <Text style={[styles.text, { color: textColor }, font_styles["p3"]]}>
-          {title}
-        </Text>
-      </Pressable>
+      extraStyles={[
+        { backgroundColor: bgColor, borderRadius: sizes.LG + 10 },
+        styles.btn,
+      ]}
+      action={action}
+    >
+      <Text style={[styles.text, { color: textColor }, font_styles["p3"]]}>
+        {title}
+      </Text>
     </ScalingView>
   );
 };

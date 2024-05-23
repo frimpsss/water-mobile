@@ -5,7 +5,13 @@ import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors, fonts, hp, sizes, wp } from "@/constants";
 
-const KTabBar = ({ descriptors, navigation, state }: BottomTabBarProps) => {
+const KTabBar = ({
+  descriptors,
+  navigation,
+  state,
+  visible,
+}: BottomTabBarProps & { visible: boolean }) => {
+  if (!visible) return null;
   return (
     <SafeAreaView
       edges={["bottom"]}

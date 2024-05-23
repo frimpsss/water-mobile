@@ -1,14 +1,9 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import React, { ReactNode } from "react";
 import * as Icons from "iconsax-react-native";
 import { colors, hp, wp } from "@/constants";
 import { font_styles } from "../core/Text";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const SettingsTab = ({
   icon,
@@ -25,14 +20,11 @@ const SettingsTab = ({
 }) => {
   const IconComponent = Icons[icon];
   return (
-    <Pressable style={styles.tab}>
+    <TouchableOpacity style={styles.tab} onPress={onTap}>
       <View style={styles.leading}>
-        {
-          <IconComponent
-            color={colors.black[950]}
-            size={hp(19)}
-          />
-        }
+        <View style={styles.icon}>
+          {<IconComponent color={colors.black[950]} size={hp(19)} />}
+        </View>
       </View>
       <View style={styles.content}>
         <Text style={[font_styles["h6"]]}>{title}</Text>
@@ -41,7 +33,7 @@ const SettingsTab = ({
         )}
       </View>
       <View style={styles.trailing}>{trailing}</View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
@@ -54,11 +46,8 @@ const styles = StyleSheet.create({
   },
   leading: {
     flex: 2,
-    backgroundColor: colors.mantis[50],
     alignItems: "center",
     justifyContent: "center",
-    height: hp(50),
-    borderRadius: hp(2500),
   },
   content: {
     flex: 10,
@@ -72,6 +61,14 @@ const styles = StyleSheet.create({
   },
   subtext: {
     color: colors.black[300],
+  },
+  icon: {
+    backgroundColor: colors.mantis[50],
+    alignItems: "center",
+    justifyContent: "center",
+    height: hp(50),
+    width: hp(50),
+    borderRadius: hp(25),
   },
 });
 

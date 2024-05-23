@@ -14,7 +14,15 @@ export default function TabStack() {
       screenOptions={{
         headerShown: false,
       }}
-      tabBar={(props) => <KTabBar {...props} />}
+      tabBar={(props) => {
+        const routeName = props.state.routes[props.state.index].state
+        ? props.state.routes[props.state.index].state.routeNames[
+            props.state.routes[props.state.index].state.index
+          ]
+        : props.state.routes[props.state.index].name;
+        const visible = ![screenNames.home.consumptionDetails].includes(routeName);
+        return <KTabBar {...props} visible={visible} />;
+      }}
     >
       <Tab.Screen
         component={HomeStack}
@@ -42,7 +50,6 @@ export default function TabStack() {
         name={screenNames.tabs.accoutsTab}
         options={{
           title: "Settings",
-          
         }}
       />
     </Tab.Navigator>

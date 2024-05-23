@@ -6,19 +6,15 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import React, { useEffect } from "react";
-import { colors, fonts, hp, sizes, wp } from "@/constants";
-import ScreenWithBackButton from "@/components/core/ScreenWithBackButton";
+import React from "react";
+import { colors, hp, sizes, wp, screenNames } from "@/constants";
 import SettingsTab from "@/components/settings/SettingsTab";
-import { ArrowRight, ArrowRight2 } from "iconsax-react-native";
+import { ArrowRight2 } from "iconsax-react-native";
 import Profile from "@/components/settings/Profile";
 import { font_styles } from "@/components/core/Text";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Account = ({ navigation }: any) => {
-  useEffect(() => {
-    navigation.setOptions({ tabBarVisible: false });
-  }, []);
   return (
     <View style={[styles.screen]}>
       <SafeAreaView>
@@ -84,7 +80,9 @@ const Account = ({ navigation }: any) => {
                 size={hp(24)}
               />
             }
-            onTap={() => {}}
+            onTap={() => {
+              navigation.navigate(screenNames.auth.login);
+            }}
           />
         </View>
         <Text style={[font_styles["p1"], styles.versionText]}>v1.00.1</Text>

@@ -1,6 +1,7 @@
 export const screenNames = {
   home: {
     initialScreen: "home",
+    consumptionDetails: 'consumption_details'
   },
   tabs: {
     main: "tabs",
