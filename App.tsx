@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 
 SplashScreen.preventAutoHideAsync();
 export default function App() {
@@ -42,8 +42,9 @@ export default function App() {
   if (fontsLoaded)
     return (
       <View style={styles.container} onLayout={() => setAppReady(true)}>
-        <RootStack />
-        <StatusBar style="auto" />
+        <KeyboardProvider>
+          <RootStack />
+        </KeyboardProvider>
       </View>
     );
 }

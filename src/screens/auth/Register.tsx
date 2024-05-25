@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Platform,
-  KeyboardAvoidingView,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, Alert, Platform } from "react-native";
 import React, { useRef } from "react";
 import ScreenWithBackButton from "@/components/core/ScreenWithBackButton";
 import { colors, hp, screenNames, sizes, wp } from "@/constants";
@@ -13,9 +6,12 @@ import { font_styles } from "@/components/core/Text";
 import InputField from "@/components/core/InputField";
 import { Formik } from "formik";
 import { signupvalidator } from "@/utils";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AuthActionButton from "@/components/auth/AuthActionButton";
 import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  KeyboardAwareScrollView,
+  KeyboardStickyView,
+} from "react-native-keyboard-controller";
 
 const Register = ({ navigation }: any) => {
   const formRef = useRef(null);
@@ -45,16 +41,10 @@ const Register = ({ navigation }: any) => {
           {({ ...form }) => {
             return (
               <KeyboardAwareScrollView
-                keyboardShouldPersistTaps={"handled"}
-                automaticallyAdjustKeyboardInsets
-                keyboardDismissMode={"interactive"}
                 showsVerticalScrollIndicator={false}
-                enableOnAndroid={true}
-                enableAutomaticScroll={Platform.OS === "ios"}
-                extraHeight={hp(50)}
-                extraScrollHeight={hp(30)}
+                keyboardShouldPersistTaps={"handled"}
               >
-                <View style={styles.form}>
+                <View style={[styles.form]}>
                   <InputField
                     id={"name"}
                     label={"Name"}
@@ -115,26 +105,28 @@ const Register = ({ navigation }: any) => {
             );
           }}
         </Formik>
-        <KeyboardAvoidingView
-          behavior={Platform.select({
-            android: "height",
-            ios: "padding",
-          })}
-          keyboardVerticalOffset={100}
-          style={styles.btn}
-        >
-          <SafeAreaView edges={["bottom"]}>
-            <AuthActionButton
-              title="Register"
-              bgColor={colors.mantis[950]}
-              action={() => {
-                Alert.alert("Values", JSON.stringify(formRef.current.values));
-              }}
-              textColor={"#fff"}
-            />
-          </SafeAreaView>
-        </KeyboardAvoidingView>
       </View>
+      <KeyboardStickyView
+        style={styles.btn}
+        offset={{
+          closed: 0,
+          opened: Platform.select({
+            android: 0,
+            ios: hp(35),
+          }),
+        }}
+      >
+        <SafeAreaView edges={["bottom"]}>
+          <AuthActionButton
+            title="Register"
+            bgColor={colors.mantis[950]}
+            action={() => {
+              Alert.alert("Values", JSON.stringify(formRef.current.values));
+            }}
+            textColor={"#fff"}
+          />
+        </SafeAreaView>
+      </KeyboardStickyView>
     </ScreenWithBackButton>
   );
 };
@@ -164,4 +156,3 @@ const styles = StyleSheet.create({
 });
 
 export default Register;
- 

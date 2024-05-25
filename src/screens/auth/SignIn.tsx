@@ -3,8 +3,6 @@ import {
   Text,
   StyleSheet,
   Platform,
-  KeyboardAvoidingView,
-  Alert,
 } from "react-native";
 import React, { useRef } from "react";
 import ScreenWithBackButton from "@/components/core/ScreenWithBackButton";
@@ -12,11 +10,13 @@ import { colors, hp, screenNames, sizes, wp } from "@/constants";
 import { font_styles } from "@/components/core/Text";
 import { Formik } from "formik";
 import { signinvalidator } from "@/utils";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import InputField from "@/components/core/InputField";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AuthActionButton from "@/components/auth/AuthActionButton";
-
+import {
+  KeyboardAwareScrollView,
+  KeyboardStickyView,
+} from "react-native-keyboard-controller";
 const SignIn = ({ navigation }) => {
   const formRef = useRef(null);
   return (
@@ -42,13 +42,7 @@ const SignIn = ({ navigation }) => {
             return (
               <KeyboardAwareScrollView
                 keyboardShouldPersistTaps={"handled"}
-                automaticallyAdjustKeyboardInsets
-                keyboardDismissMode={"interactive"}
                 showsVerticalScrollIndicator={false}
-                enableOnAndroid={true}
-                enableAutomaticScroll={Platform.OS === "ios"}
-                extraHeight={hp(50)}
-                extraScrollHeight={hp(30)}
               >
                 <View style={styles.form}>
                   <InputField
@@ -74,26 +68,28 @@ const SignIn = ({ navigation }) => {
             );
           }}
         </Formik>
-        <KeyboardAvoidingView
-          behavior={Platform.select({
-            android: "height",
-            ios: "padding",
-          })}
-          keyboardVerticalOffset={100}
-          style={styles.btn}
-        >
-          <SafeAreaView edges={["bottom"]}>
-            <AuthActionButton
-              title="Sign In"
-              bgColor={colors.mantis[950]}
-              action={() => {
-                navigation.navigate(screenNames.tabs.main)
-              }}
-              textColor={"#fff"}
-            />
-          </SafeAreaView>
-        </KeyboardAvoidingView>
       </View>
+      <KeyboardStickyView
+        style={styles.btn}
+        offset={{
+          closed: 0,
+          opened: Platform.select({
+            android: 0,
+            ios: hp(35),
+          }),
+        }}
+      >
+        <SafeAreaView edges={["bottom"]}>
+          <AuthActionButton
+            title="Sign In"
+            bgColor={colors.mantis[950]}
+            action={() => {
+              navigation.navigate(screenNames.tabs.main);
+            }}
+            textColor={"#fff"}
+          />
+        </SafeAreaView>
+      </KeyboardStickyView>
     </ScreenWithBackButton>
   );
 };
