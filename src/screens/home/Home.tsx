@@ -5,7 +5,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { font_styles } from "@/components/core/Text";
 import { getGreeting } from "@/utils";
 import Overview from "@/components/home/Overview";
-
+import { ScrollView } from "react-native-gesture-handler";
+import Today from "@/components/home/Today";
+import NavigationComponent from "@/components/home/NotificationsComponent";
 export default function Home({ navigation }: any) {
   return (
     <View style={[styles.screen]}>
@@ -14,7 +16,19 @@ export default function Home({ navigation }: any) {
           {getGreeting()},
         </Text>
         <Text style={[font_styles["h3"], styles.name]}>Frimpong</Text>
-        <Overview navigation={navigation} />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            gap: hp(20),
+            paddingHorizontal: wp(20),
+          }}
+        >
+          <Overview navigation={navigation} />
+
+          <Today navigation={navigation} title={"Today"} />
+          <NavigationComponent navigation={navigation} />
+          <View style={[{ marginBottom: hp(sizes.screenHeight / 7) }]}></View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );

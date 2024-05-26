@@ -8,23 +8,30 @@ interface props {
   title: string;
   children: ReactNode;
   morePage: string;
-  navigation: any
+  navigation: any;
 }
-const HomeSectionsLayout = ({ title, children, morePage, navigation }: props) => {
+const HomeSectionsLayout = ({
+  title,
+  children,
+  morePage,
+  navigation,
+}: props) => {
   return (
     <View style={styles.container}>
       <View style={[styles.header]}>
         <Text style={[font_styles["p4"], styles.title]}>{title}</Text>
-        <CustomAnimatedScale
-          action={() => {
-            navigation.navigate(morePage)
-          }}
-          animatedScale={0.97}
-          extraStyles={[styles.viewMoreBtn]}
-        >
-          <Text style={[font_styles["p2"], styles.viewMore]}>More</Text>
-          <ArrowRight2 size={hp(15)} color={colors.white[400]} />
-        </CustomAnimatedScale>
+        {morePage && (
+          <CustomAnimatedScale
+            action={() => {
+              navigation.navigate(morePage);
+            }}
+            animatedScale={0.97}
+            extraStyles={[styles.viewMoreBtn]}
+          >
+            <Text style={[font_styles["p2"], styles.viewMore]}>More</Text>
+            <ArrowRight2 size={hp(15)} color={colors.white[400]} />
+          </CustomAnimatedScale>
+        )}
       </View>
       {children}
     </View>
@@ -35,7 +42,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white[50],
     padding: hp(20),
     borderRadius: hp(20),
-    marginHorizontal: wp(20),
+    // marginHorizontal: wp(20),
+    flex: 1,
   },
   title: {
     color: colors.mantis[950],
