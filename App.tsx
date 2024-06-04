@@ -45,8 +45,8 @@ export default function App() {
       <View style={styles.container} onLayout={() => setAppReady(true)}>
         <KeyboardProvider>
           <RootStack />
-          <StatusBar style="auto" />
         </KeyboardProvider>
+        <StatusBar style="auto" />
       </View>
     );
 }

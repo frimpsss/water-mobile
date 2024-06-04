@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAMNdTyVbom-8_BAnnw3jcaAUVnWxO-4po</string>
+	<key>GCM_SENDER_ID</key>
+	<string>329519899179</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.aaffrrimps.waterManagement</string>
+	<key>PROJECT_ID</key>
+	<string>aquatrack-ecbd9</string>
+	<key>STORAGE_BUCKET</key>
+	<string>aquatrack-ecbd9.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:329519899179:ios:4b9a0e191c25782020806e</string>
+	<key>DATABASE_URL</key>
+	<string>https://aquatrack-ecbd9-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>

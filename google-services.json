@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "329519899179",
+    "firebase_url": "https://aquatrack-ecbd9-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "aquatrack-ecbd9",
+    "storage_bucket": "aquatrack-ecbd9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329519899179:android:256dc98900caf3be20806e",
+        "android_client_info": {
+          "package_name": "com.aaffrrimps.waterManagement"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7dhkvnuGYRtd0OzpvXVaKZiO7mvRQhv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

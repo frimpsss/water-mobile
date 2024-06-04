@@ -5,6 +5,7 @@ const AllNotifications = () => {
   return (
     <View>
       <Text>AllNotifications</Text>
+      <Text>project id: {process.env.EXPO_PUBLIC_PROJECT_ID}</Text>
     </View>
   )
 }
