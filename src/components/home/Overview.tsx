@@ -14,7 +14,7 @@ const Overview = ({ navigation }) => {
 
   useEffect(() => {
     const meter1Ref = database().ref("/readings/meter-1");
-
+    // To-Do Format Data properly
     const onValueChange = meter1Ref.on("value", (snapshot) => {
       const data = snapshot.val();
       if (data) {
@@ -33,7 +33,7 @@ const Overview = ({ navigation }) => {
             value,
             labelComponent: () => <XAxisLabel text={timeStamp} />,
           };
-        }).filter(dataPoint => dataPoint !== null); // Filter out invalid data points
+        }).filter(dataPoint => dataPoint !== null); 
 
         setChartData(formattedData);
       } else {
