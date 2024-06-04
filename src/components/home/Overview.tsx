@@ -1,82 +1,76 @@
 import { View, StyleSheet, Text } from "react-native";
-import React, { useState } from "react";
-import { colors, hp, screenNames, sizes, wp } from "@/constants";
+import React, { useEffect, useState } from "react";
+import { colors, hp, screenNames, wp } from "@/constants";
 import { LineChart } from "react-native-gifted-charts";
 import { font_styles } from "../core/Text";
 import CustomAnimatedScale from "../core/ScaleView";
 import HomeSectionsLayout from "./HomeSectionsLayout";
 import XAxisLabel from "./XAxisLabel";
+import database from "@react-native-firebase/database";
 
-const Overview = ({ navigation }: any) => {
+const Overview = ({ navigation }) => {
   const [viewWidth, setViewWidth] = useState(0);
+  const [chartData, setChartData] = useState([]);
 
-  const onLayout = (event: any) => {
+  useEffect(() => {
+    const meter1Ref = database().ref("/readings/meter-1");
+
+    const onValueChange = meter1Ref.on("value", (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        console.log("Fetched data: ", data);
+        const formattedData = Object.values(data).map((reading: {value: string, timeStamp: string}) => {
+          const value = parseFloat(reading.value);
+          const timeStamp = `${new Date(reading.timeStamp).getHours()}:${new Date(reading.timeStamp).getMinutes()}`;
+
+          // Validate the data
+          if (isNaN(value)) {
+            console.error("Invalid data point: ", reading);
+            return null;
+          }
+
+          return {
+            value,
+            labelComponent: () => <XAxisLabel text={timeStamp} />,
+          };
+        }).filter(dataPoint => dataPoint !== null); // Filter out invalid data points
+
+        setChartData(formattedData);
+      } else {
+        console.log("No data available");
+      }
+    });
+
+    // Cleanup function
+    return () => {
+      meter1Ref.off("value", onValueChange);
+    };
+  }, []);
+
+  const onLayout = (event) => {
     const { width } = event.nativeEvent.layout;
     setViewWidth(width);
   };
-  const [activeCategory, setActiveCategory] =
-    useState<(typeof categories)[number]>("H");
+
+  const [activeCategory, setActiveCategory] = useState("H");
   const categories = ["H", "D", "M", "6M", "1Y", "ALL"];
-  const data = [
-    {
-      value: 0,
-    },
-    {
-      value: 1,
-      labelComponent: () => {
-        return <XAxisLabel text="12 Nov" />;
-      },
-    },
-    {
-      value: 4,
-      labelComponent: () => {
-        return <XAxisLabel text="13 Nov" />;
-      },
-    },
-    {
-      value: 5,
-      labelComponent: () => {
-        return <XAxisLabel text="14 Nov" />;
-      },
-    },
-    {
-      value: 2,
-      labelComponent: () => {
-        return <XAxisLabel text="15 Nov" />;
-      },
-    },
-    { value: 3 },
-    { value: 1 },
-    { value: 4 },
-    { value: 5 },
-    { value: 2 },
-    { value: 3 },
-    { value: 1 },
-    { value: 4 },
-    { value: 5 },
-    { value: 2 },
-    { value: 3 },
-    { value: 1 },
-    { value: 4 },
-    { value: 5 },
-    { value: 2 },
-  ];
+
   return (
     <HomeSectionsLayout
       navigation={navigation}
       title="Consumption"
       morePage={screenNames.home.consumptionDetails}
     >
-      <View style={[{ paddingVertical: hp(10), gap: 20 }]} onLayout={onLayout}>
+      <View style={{ paddingVertical: hp(10), gap: 20 }} onLayout={onLayout}>
         <LineChart
-          yAxisTextStyle={[font_styles["p2"], styles.yaxisLabel]}
+          yAxisTextStyle={[font_styles.p2, styles.yaxisLabel]}
           xAxisIndicesWidth={10}
-          data={data}
+          data={chartData}
           noOfSections={3}
           maxValue={6}
           isAnimated
           areaChart
-          hideOrigin
+          // hideOrigin
           color={colors.mantis[950]}
           startFillColor={colors.mantis[100]}
           startOpacity={0.7}
@@ -88,52 +82,49 @@ const Overview = ({ navigation }: any) => {
           yAxisColor={colors.white[300]}
           yAxisThickness={0}
           dataPointsColor={colors.mantis[950]}
-          hideYAxisText
+          // hideYAxisText
           width={viewWidth - wp(30)}
         />
 
-        <View style={[styles.categories]}>
-          {categories.map((e, i) => {
-            return (
-              <View key={i} style={[styles.category, font_styles["p2"], ,]}>
-                <CustomAnimatedScale
-                  action={() => {
-                    setActiveCategory(e);
-                  }}
-                  extraStyles={[
-                    styles.cas,
+        <View style={styles.categories}>
+          {categories.map((e, i) => (
+            <View key={i} style={[styles.category, font_styles.p2]}>
+              <CustomAnimatedScale
+                action={() => {
+                  setActiveCategory(e);
+                }}
+                extraStyles={[
+                  styles.cas,
+                  {
+                    backgroundColor:
+                      activeCategory === e
+                        ? colors.white[200]
+                        : colors.white[100],
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    font_styles.p4,
                     {
-                      backgroundColor:
+                      color:
                         activeCategory === e
-                          ? colors.white[200]
-                          : colors.white[100],
+                          ? colors.mantis[950]
+                          : colors.white[400],
                     },
                   ]}
                 >
-                  <Text
-                    style={[
-                      font_styles["p4"],
-                      styles.catergoryText,
-                      {
-                        color:
-                          activeCategory === e
-                            ? colors.black[900]
-                            : colors.white[400],
-                      },
-                    ]}
-                  >
-                    {e}
-                  </Text>
-                </CustomAnimatedScale>
-              </View>
-            );
-          })}
+                  {e}
+                </Text>
+              </CustomAnimatedScale>
+            </View>
+          ))}
         </View>
       </View>
-      {/* </View> */}
     </HomeSectionsLayout>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white[50],
@@ -146,7 +137,6 @@ const styles = StyleSheet.create({
   },
   categories: {
     flexDirection: "row",
-    // width: '100%',
     marginHorizontal: wp(10),
     borderRadius: hp(10),
     backgroundColor: colors.white[100],
@@ -160,7 +150,6 @@ const styles = StyleSheet.create({
     borderRadius: hp(10),
     justifyContent: "center",
   },
-  catergoryText: {},
 });
 
 export default Overview;
