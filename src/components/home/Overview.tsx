@@ -19,21 +19,25 @@ const Overview = ({ navigation }) => {
       const data = snapshot.val();
       if (data) {
         console.log("Fetched data: ", data);
-        const formattedData = Object.values(data).map((reading: {value: string, timeStamp: string}) => {
-          const value = parseFloat(reading.value);
-          const timeStamp = `${new Date(reading.timeStamp).getHours()}:${new Date(reading.timeStamp).getMinutes()}`;
+        const formattedData = Object.values(data)
+          .map((reading: { value: string; timeStamp: string }) => {
+            const value = parseFloat(reading.value);
+            const timeStamp = `${new Date(
+              reading.timeStamp
+            ).getHours()}:${new Date(reading.timeStamp).getMinutes()}`;
 
-          // Validate the data
-          if (isNaN(value)) {
-            console.error("Invalid data point: ", reading);
-            return null;
-          }
+            // Validate the data
+            if (isNaN(value)) {
+              console.error("Invalid data point: ", reading);
+              return null;
+            }
 
-          return {
-            value,
-            labelComponent: () => <XAxisLabel text={timeStamp} />,
-          };
-        }).filter(dataPoint => dataPoint !== null); 
+            return {
+              value,
+              labelComponent: () => <XAxisLabel text={timeStamp} />,
+            };
+          })
+          .filter((dataPoint) => dataPoint !== null);
 
         setChartData(formattedData);
       } else {
@@ -61,30 +65,31 @@ const Overview = ({ navigation }) => {
       title="Consumption"
       morePage={screenNames.home.consumptionDetails}
     >
-      <View style={{ paddingVertical: hp(10), gap: 20 }} onLayout={onLayout}>
-        <LineChart
-          yAxisTextStyle={[font_styles.p2, styles.yaxisLabel]}
-          xAxisIndicesWidth={10}
-          data={chartData}
-          noOfSections={3}
-          maxValue={6}
-          isAnimated
-          areaChart
-          // hideOrigin
-          color={colors.mantis[950]}
-          startFillColor={colors.mantis[100]}
-          startOpacity={0.7}
-          endOpacity={0.2}
-          hideRules
-          initialSpacing={5}
-          thickness={1}
-          xAxisColor={colors.white[300]}
-          yAxisColor={colors.white[300]}
-          yAxisThickness={0}
-          dataPointsColor={colors.mantis[950]}
-          // hideYAxisText
-          width={viewWidth - wp(30)}
-        />
+      <View style={{ paddingVertical: hp(10), gap: 20 }}>
+        <View onLayout={onLayout}>
+          <LineChart
+            yAxisTextStyle={[font_styles.p2, styles.yaxisLabel]}
+            xAxisIndicesWidth={10}
+            data={chartData}
+            noOfSections={3}
+            maxValue={6}
+            isAnimated
+            areaChart
+            // hideOrigin
+            color={colors.mantis[950]}
+            startFillColor={colors.mantis[100]}
+            startOpacity={0.7}
+            endOpacity={0.2}
+            hideRules
+            initialSpacing={5}
+            thickness={1}
+            xAxisColor={colors.white[300]}
+            yAxisColor={colors.white[300]}
+            yAxisThickness={0}
+            dataPointsColor={colors.mantis[950]}
+            xAxisLength={viewWidth - hp(40)}
+          />
+        </View>
 
         <View style={styles.categories}>
           {categories.map((e, i) => (

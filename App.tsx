@@ -5,7 +5,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { StatusBar } from "expo-status-bar";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const Client = new QueryClient();
 SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [appReady, setAppReady] = useState(false);
@@ -42,12 +44,14 @@ export default function App() {
 
   if (fontsLoaded)
     return (
-      <View style={styles.container} onLayout={() => setAppReady(true)}>
-        <KeyboardProvider>
-          <RootStack />
-        </KeyboardProvider>
-        <StatusBar style="auto" />
-      </View>
+      <QueryClientProvider client={Client}>
+        <View style={styles.container} onLayout={() => setAppReady(true)}>
+          <KeyboardProvider>
+            <RootStack />
+          </KeyboardProvider>
+          <StatusBar style="auto" />
+        </View>
+      </QueryClientProvider>
     );
 }
 

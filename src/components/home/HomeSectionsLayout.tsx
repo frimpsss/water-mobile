@@ -9,15 +9,17 @@ interface props {
   children: ReactNode;
   morePage: string;
   navigation: any;
+  onLayout?: any
 }
 const HomeSectionsLayout = ({
   title,
   children,
   morePage,
   navigation,
+  onLayout
 }: props) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayout}>
       <View style={[styles.header]}>
         <Text style={[font_styles["p4"], styles.title]}>{title}</Text>
         {morePage && (
@@ -42,7 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white[50],
     padding: hp(20),
     borderRadius: hp(20),
-    // marginHorizontal: wp(20),
     flex: 1,
   },
   title: {

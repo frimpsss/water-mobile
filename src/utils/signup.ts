@@ -6,4 +6,5 @@ export const signupvalidator = Y.object().shape({
 
 export const signinvalidator = Y.object().shape({
   email: Y.string().email("Invalid email").required("Email is required"),
+  password: Y.string().required("Password is required"),
 });

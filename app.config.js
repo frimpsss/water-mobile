@@ -16,6 +16,11 @@ export default {
       supportsTablet: true,
       bundleIdentifier: "com.aaffrrimps.waterManagement",
       googleServicesFile: "./GoogleService-info.plist",
+      infoPlist: {
+        NSAppTransportSecurity: {
+          NSAllowsArbitraryLoads: true,
+        },
+      },
     },
     android: {
       adaptiveIcon: {
@@ -25,6 +30,7 @@ export default {
       package: "com.aaffrrimps.waterManagement",
       softwareKeyboardLayoutMode: "pan",
       googleServicesFile: "./google-services.json",
+      usesCleartextTraffic: true,
     },
     web: {
       favicon: "./assets/favicon.png",
@@ -32,12 +38,16 @@ export default {
     image: "latest",
     plugins: [
       "expo-font",
+      "expo-secure-store",
       "@react-native-firebase/app",
       [
         "expo-build-properties",
         {
           ios: {
             useFrameworks: "static",
+          },
+          android: {
+            usesCleartextTraffic: true,
           },
         },
       ],

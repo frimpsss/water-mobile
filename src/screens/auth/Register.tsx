@@ -1,5 +1,13 @@
-import { View, Text, StyleSheet, Alert, Platform } from "react-native";
-import React, { useRef } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  Platform,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
+import React, { useRef, useState } from "react";
 import ScreenWithBackButton from "@/components/core/ScreenWithBackButton";
 import { colors, hp, screenNames, sizes, wp } from "@/constants";
 import { font_styles } from "@/components/core/Text";
@@ -10,11 +18,14 @@ import AuthActionButton from "@/components/auth/AuthActionButton";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   KeyboardAwareScrollView,
+  KeyboardController,
   KeyboardStickyView,
 } from "react-native-keyboard-controller";
-
+import KModal from "@/components/core/KModal";
+import { UIActivityIndicator } from "react-native-indicators";
 const Register = ({ navigation }: any) => {
   const formRef = useRef(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
   return (
     <ScreenWithBackButton
       onBackClick={() => {
@@ -121,12 +132,35 @@ const Register = ({ navigation }: any) => {
             title="Register"
             bgColor={colors.mantis[950]}
             action={() => {
-              Alert.alert("Values", JSON.stringify(formRef.current.values));
+              KeyboardController.dismiss();
+              setShowModal(true);
             }}
             textColor={"#fff"}
           />
         </SafeAreaView>
       </KeyboardStickyView>
+      <KModal isOpen={showModal}>
+        <View
+          style={{
+            // alignItems: "center",
+            // justifyContent: "center",
+            backgroundColor: colors.white[100],
+            paddingVertical: 10,
+            paddingHorizontal: wp(sizes.screenWidth / 10),
+            borderRadius: 20,
+          }}
+        >
+          <ActivityIndicator />
+          {/* <UIActivityIndicator  size={10} style={{flex: 10}}/> */}
+          <Pressable
+            onPress={() => {
+              setShowModal(false);
+            }}
+          >
+            <Text style={[font_styles["p3"], { marginTop: 5 }]}>Loading</Text>
+          </Pressable>
+        </View>
+      </KModal>
     </ScreenWithBackButton>
   );
 };

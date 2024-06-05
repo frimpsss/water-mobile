@@ -41,7 +41,6 @@ const Onboarding = ({ navigation }: any) => {
           textColor={colors.mantis[950]}
         />
       </View>
-      <StatusBar style="light" />
     </View>
   );
 };

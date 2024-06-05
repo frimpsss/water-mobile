@@ -3,6 +3,9 @@ import {
   Text,
   StyleSheet,
   Platform,
+  ActivityIndicator,
+  Pressable,
+  Alert,
 } from "react-native";
 import React, { useRef } from "react";
 import ScreenWithBackButton from "@/components/core/ScreenWithBackButton";
@@ -15,10 +18,49 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AuthActionButton from "@/components/auth/AuthActionButton";
 import {
   KeyboardAwareScrollView,
+  KeyboardController,
   KeyboardStickyView,
 } from "react-native-keyboard-controller";
+import { useMutation } from "@tanstack/react-query";
+import { logIn } from "@/api/mutations/auth";
+import KModal from "@/components/core/KModal";
+import * as SecureStrorage from "expo-secure-store";
+import * as Burnt from "burnt";
+
 const SignIn = ({ navigation }) => {
   const formRef = useRef(null);
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: logIn,
+    onError(error, variables, context) {
+      Burnt.toast({
+        title: error?.message,
+        preset: "error",
+        message: error?.message,
+      });
+    },
+    onSuccess(data, variables, context) {
+      if (data?.data?.status) {
+        SecureStrorage.setItem("auth", data?.data?.data);
+        navigation.navigate(screenNames.tabs.main);
+      } else {
+        Alert.prompt(data?.data?.message);
+      }
+    },
+  });
+
+  function handleSubmit() {
+    if (formRef.current.isValid && formRef.current.dirty) {
+      mutate({
+        email: formRef.current.values.email,
+        password: formRef.current.values.password,
+      });
+    } else {
+      Object.keys(formRef.current?.values)?.map((f) => {
+        formRef.current.setFieldTouched(f, true);
+      });
+    }
+  }
+
   return (
     <ScreenWithBackButton
       onBackClick={() => {
@@ -84,12 +126,34 @@ const SignIn = ({ navigation }) => {
             title="Sign In"
             bgColor={colors.mantis[950]}
             action={() => {
-              navigation.navigate(screenNames.tabs.main);
+              KeyboardController.dismiss();
+              handleSubmit();
             }}
             textColor={"#fff"}
           />
         </SafeAreaView>
       </KeyboardStickyView>
+      <KModal isOpen={isPending}>
+        <View
+          style={{
+            // alignItems: "center",
+            // justifyContent: "center",
+            backgroundColor: colors.white[100],
+            paddingVertical: 10,
+            paddingHorizontal: wp(sizes.screenWidth / 10),
+            borderRadius: 20,
+          }}
+        >
+          <ActivityIndicator />
+          <Pressable
+            onPress={() => {
+              // setShowModal(false);
+            }}
+          >
+            <Text style={[font_styles["p3"], { marginTop: 5 }]}>Loading</Text>
+          </Pressable>
+        </View>
+      </KModal>
     </ScreenWithBackButton>
   );
 };
