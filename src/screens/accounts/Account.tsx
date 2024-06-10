@@ -13,7 +13,7 @@ import { ArrowRight2 } from "iconsax-react-native";
 import Profile from "@/components/settings/Profile";
 import { font_styles } from "@/components/core/Text";
 import { SafeAreaView } from "react-native-safe-area-context";
-
+import * as SecureStore from "expo-secure-store";
 const Account = ({ navigation }: any) => {
   return (
     <View style={[styles.screen]}>
@@ -80,8 +80,10 @@ const Account = ({ navigation }: any) => {
                 size={hp(24)}
               />
             }
-            onTap={() => {
-              navigation.navigate(screenNames.auth.login);
+            onTap={async () => {
+              await SecureStore.deleteItemAsync("auth");
+
+              navigation.replace(screenNames.auth.main);
             }}
           />
         </View>

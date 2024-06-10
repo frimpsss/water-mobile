@@ -1,11 +1,17 @@
 import { View, Text, StyleSheet, Image } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import AuthActionButton from "@/components/auth/AuthActionButton";
 import { colors, hp, screenNames, sizes, wp } from "@/constants";
 import { font_styles } from "@/components/core/Text";
-import { StatusBar } from "expo-status-bar";
+import * as SecureStorage from "expo-secure-store";
 
 const Onboarding = ({ navigation }: any) => {
+  useEffect(() => {
+    const token = SecureStorage.getItem("auth");
+    if (token) {
+      navigation.replace(screenNames.tabs.main);
+    }
+  }, []);
   return (
     <View style={styles.screen}>
       <View style={styles.illustration}>

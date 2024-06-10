@@ -18,7 +18,6 @@ const Overview = ({ navigation }) => {
     const onValueChange = meter1Ref.on("value", (snapshot) => {
       const data = snapshot.val();
       if (data) {
-        console.log("Fetched data: ", data);
         const formattedData = Object.values(data)
           .map((reading: { value: string; timeStamp: string }) => {
             const value = parseFloat(reading.value);

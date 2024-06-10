@@ -8,14 +8,22 @@ import {
   SignIn,
 } from "@/screens";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useEffect } from "react";
+import * as SecureStore from "expo-secure-store";
 const Stack = createStackNavigator();
 
-const AuthStack = () => {
-
+const AuthStack = ({ navigation }: { navigation: any }) => {
+  useEffect(() => {
+    if (SecureStore.getItem("auth")) {
+      navigation.replace(screenNames.tabs.main);
+    }
+  }, []);
   return (
-    <Stack.Navigator screenOptions={{
-      headerShown: false
-    }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen name={screenNames.auth.onboarding} component={Onboarding} />
       <Stack.Screen name={screenNames.auth.login} component={SignIn} />
       <Stack.Group>

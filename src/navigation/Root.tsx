@@ -4,12 +4,11 @@ import { createStackNavigator } from "@react-navigation/stack";
 import TabStack from "./TabStack";
 import AuthStack from "./AuthStack";
 import { useEffect, useState } from "react";
+import * as SecureStore from "expo-secure-store";
 const Stack = createStackNavigator();
-
 export default function RootStack() {
   const [initialRouteName, setInitialRouteName] = useState<string>();
   useEffect(() => {
-    // TODO: check if authenticated from a state and setInitialRouteName to Home if authenticated
     setInitialRouteName(screenNames.auth.onboarding);
   }, []);
   return (

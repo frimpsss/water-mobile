@@ -21,3 +21,30 @@ export async function logIn({
     throw error;
   }
 }
+
+export async function signUp({
+  email,
+  password,
+  phoneNumber,
+  name,
+}: {
+  email: string;
+  password: string;
+  name: string;
+  phoneNumber: string;
+}) {
+  try {
+    const resp = await apiAuthNotRequired.post("/user/auth/register", {
+      email,
+      password,
+      phoneNumber,
+      name,
+    });
+    return resp;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.response?.data?.message || "An error occurred");
+    }
+    throw error;
+  }
+}

@@ -3,12 +3,16 @@ import { screenNames } from "@/constants";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeStack from "./HomeStack";
 import AccountStack from "./AccountStack";
-import React from "react";
+import React, { useEffect } from "react";
 import BillingStack from "./BillingStack";
 import NotificationStack from "./NotificationsStack";
 const Tab = createBottomTabNavigator();
 
-export default function TabStack() {
+export default function TabStack({ navigation }: { navigation: any }) {
+  useEffect(() => {
+    // TODO: check if authenticated from a state and setInitialRouteName to Home if authenticated
+    navigation.replace(screenNames.auth.login);
+  }, []);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -16,11 +20,13 @@ export default function TabStack() {
       }}
       tabBar={(props) => {
         const routeName = props.state.routes[props.state.index].state
-        ? props.state.routes[props.state.index].state.routeNames[
-            props.state.routes[props.state.index].state.index
-          ]
-        : props.state.routes[props.state.index].name;
-        const visible = ![screenNames.home.consumptionDetails].includes(routeName);
+          ? props.state.routes[props.state.index].state.routeNames[
+              props.state.routes[props.state.index].state.index
+            ]
+          : props.state.routes[props.state.index].name;
+        const visible = ![screenNames.home.consumptionDetails].includes(
+          routeName
+        );
         return <KTabBar {...props} visible={visible} />;
       }}
     >

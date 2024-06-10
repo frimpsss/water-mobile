@@ -5,7 +5,6 @@ import {
   Platform,
   ActivityIndicator,
   Pressable,
-  Alert,
 } from "react-native";
 import React, { useRef } from "react";
 import ScreenWithBackButton from "@/components/core/ScreenWithBackButton";
@@ -43,17 +42,26 @@ const SignIn = ({ navigation }) => {
         SecureStrorage.setItem("auth", data?.data?.data);
         navigation.navigate(screenNames.tabs.main);
       } else {
-        Alert.prompt(data?.data?.message);
+        Burnt.toast({
+          title: "An error occured",
+          preset: "error",
+          message: data?.data?.message,
+        });
       }
+    },
+    onSettled(data, error, variables, context) {
+      formRef.current.resetForm();
     },
   });
 
   function handleSubmit() {
     if (formRef.current.isValid && formRef.current.dirty) {
-      mutate({
-        email: formRef.current.values.email,
-        password: formRef.current.values.password,
-      });
+      setTimeout(() => {
+        mutate({
+          email: formRef.current.values.email,
+          password: formRef.current.values.password,
+        });
+      }, 1200);
     } else {
       Object.keys(formRef.current?.values)?.map((f) => {
         formRef.current.setFieldTouched(f, true);
@@ -127,7 +135,15 @@ const SignIn = ({ navigation }) => {
             bgColor={colors.mantis[950]}
             action={() => {
               KeyboardController.dismiss();
+
               handleSubmit();
+              // Snackbar.show({
+              //   text: 'error?.message',
+              //   backgroundColor: colors.scarlet[600],
+              //   duration: Snackbar.LENGTH_LONG,
+              //   fontFamily:  fonts.PoppinsRegular,
+
+              // })
             }}
             textColor={"#fff"}
           />

@@ -43,7 +43,7 @@ const InputField = ({
       <Text style={[styles.label]}>{label}</Text>
       <View>
         <TextInput
-          secureTextEntry={type == "password" && show}
+          secureTextEntry={type == "password" && !show}
           placeholder={placeholder}
           onEndEditing={handleBlur(id)}
           onBlur={() => {

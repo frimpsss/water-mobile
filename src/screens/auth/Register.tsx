@@ -2,12 +2,10 @@ import {
   View,
   Text,
   StyleSheet,
-  Alert,
   Platform,
-  Pressable,
   ActivityIndicator,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import ScreenWithBackButton from "@/components/core/ScreenWithBackButton";
 import { colors, hp, screenNames, sizes, wp } from "@/constants";
 import { font_styles } from "@/components/core/Text";
@@ -22,10 +20,58 @@ import {
   KeyboardStickyView,
 } from "react-native-keyboard-controller";
 import KModal from "@/components/core/KModal";
-import { UIActivityIndicator } from "react-native-indicators";
+import { useMutation } from "@tanstack/react-query";
+import { signUp } from "@/api/mutations/auth";
+import * as Burnt from "burnt";
+
 const Register = ({ navigation }: any) => {
   const formRef = useRef(null);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: signUp,
+    onError(error, variables, context) {
+      Burnt.toast({
+        title: "An error occured",
+        preset: "error",
+        message: error?.message,
+      });
+    },
+    onSuccess(data, variables, context) {
+      if (data?.data?.status) {
+        // navigation.navigate(screenNames.auth.login);
+        Burnt.toast({
+          title: "Account created",
+          preset: "done",
+          message: "Successful",
+        });
+      } else {
+        Burnt.toast({
+          title: "An error occured",
+          preset: "error",
+          message: data?.data?.message,
+        });
+      }
+    },
+    onSettled(data, error, variables, context) {
+      formRef.current.resetForm();
+    },
+  });
+
+  function handleSubmit() {
+    if (formRef.current.isValid && formRef.current.dirty) {
+      setTimeout(() => {
+        mutate({
+          email: formRef.current.values.email,
+          password: formRef.current.values.password,
+          phoneNumber: formRef.current.values.phoneNumber,
+          name: formRef.current.values.name,
+        });
+      }, 1200);
+    } else {
+      Object.keys(formRef.current?.values)?.map((f) => {
+        formRef.current.setFieldTouched(f, true);
+      });
+    }
+  }
   return (
     <ScreenWithBackButton
       onBackClick={() => {
@@ -41,7 +87,6 @@ const Register = ({ navigation }: any) => {
           initialValues={{
             email: "",
             password: "",
-            meterNumber: "",
             phoneNumber: "",
             name: "",
             confirmPassword: "",
@@ -84,7 +129,7 @@ const Register = ({ navigation }: any) => {
                     keyboardType="phone-pad"
                     {...form}
                   />
-                  <InputField
+                  {/* <InputField
                     id={"meterNumber"}
                     label={"Meter number"}
                     placeholder={"GWCL-2342341"}
@@ -92,7 +137,7 @@ const Register = ({ navigation }: any) => {
                     handleBlur={form.handleBlur("meterNumber")}
                     handleChange={form.handleChange("meterNumber")}
                     {...form}
-                  />
+                  /> */}
                   <InputField
                     id={"password"}
                     label={"Password"}
@@ -133,13 +178,14 @@ const Register = ({ navigation }: any) => {
             bgColor={colors.mantis[950]}
             action={() => {
               KeyboardController.dismiss();
-              setShowModal(true);
+
+              handleSubmit();
             }}
             textColor={"#fff"}
           />
         </SafeAreaView>
       </KeyboardStickyView>
-      <KModal isOpen={showModal}>
+      <KModal isOpen={isPending}>
         <View
           style={{
             // alignItems: "center",
@@ -152,13 +198,13 @@ const Register = ({ navigation }: any) => {
         >
           <ActivityIndicator />
           {/* <UIActivityIndicator  size={10} style={{flex: 10}}/> */}
-          <Pressable
+          {/* <Pressable
             onPress={() => {
               setShowModal(false);
             }}
-          >
-            <Text style={[font_styles["p3"], { marginTop: 5 }]}>Loading</Text>
-          </Pressable>
+          > */}
+          <Text style={[font_styles["p3"], { marginTop: 5 }]}>Loading</Text>
+          {/* </Pressable> */}
         </View>
       </KModal>
     </ScreenWithBackButton>
