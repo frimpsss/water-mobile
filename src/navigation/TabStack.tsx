@@ -24,7 +24,7 @@ export default function TabStack({ navigation }: { navigation: any }) {
               props.state.routes[props.state.index].state.index
             ]
           : props.state.routes[props.state.index].name;
-        const visible = ![screenNames.home.consumptionDetails].includes(
+        const visible = ![screenNames.home.consumptionDetails, screenNames.notification.single].includes(
           routeName
         );
         return <KTabBar {...props} visible={visible} />;
