@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 export function getGreeting(): string {
   const now = new Date();
   const hours = now.getHours();
@@ -30,3 +32,20 @@ export function formatDate(date: Date): string {
     return dateToCompare.toLocaleDateString(undefined, options);
   }
 }
+export  const groupByDate = (array: any[]) => {
+  const grouped = _.groupBy(array, (obj) => obj.createdAt.split("T")[0]);
+  return Object.keys(grouped).map((date) => ({
+    date,
+    notifications: grouped[date],
+  }));
+};
+
+export const getCurrentDateInFormat = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  const formattedDate = `${year}-${month}-${day}`;
+  return formattedDate;
+};

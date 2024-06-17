@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { colors, fonts, hp, sizes, wp } from "@/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { font_styles } from "@/components/core/Text";
@@ -7,8 +7,24 @@ import { getGreeting } from "@/utils";
 import Overview from "@/components/home/Overview";
 import { ScrollView } from "react-native-gesture-handler";
 import Today from "@/components/home/Today";
-import NavigationComponent from "@/components/home/NotificationsComponent";
+import NotificationComponent from "@/components/home/NotificationsComponent";
+import { useQuery } from "@tanstack/react-query";
+import * as SecureStore from 'expo-secure-store'
+import { getUserInfo } from "@/api/queries/user";
+
 export default function Home({ navigation }: any) {
+  const {data, isLoading, isError } = useQuery({
+    queryKey: ['user-info'], 
+    queryFn: getUserInfo
+  })
+
+
+  useEffect(()=>{
+    if(!isLoading && !isError){
+      SecureStore.setItem("user", JSON.stringify(data?.data?.data))
+    }
+  },[])
+
   return (
     <View style={[styles.screen]}>
       <SafeAreaView edges={["top"]}>
@@ -26,7 +42,7 @@ export default function Home({ navigation }: any) {
           <Overview navigation={navigation} />
 
           <Today navigation={navigation} title={"Today"} />
-          <NavigationComponent navigation={navigation} />
+          <NotificationComponent navigation={navigation} />
           <View style={[{ marginBottom: hp(sizes.screenHeight / 7) }]}></View>
         </ScrollView>
       </SafeAreaView>

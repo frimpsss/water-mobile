@@ -22,6 +22,7 @@ interface props {
   handleBlur: any;
   touched: any;
   keyboardType?: KeyboardTypeOptions;
+  disabled?: boolean;
 }
 
 const InputField = ({
@@ -35,6 +36,7 @@ const InputField = ({
   touched,
   type,
   keyboardType,
+  disabled = false,
 }: props) => {
   const [focus, setOnFocus] = useState(false);
   const [show, setShow] = React.useState(false);
@@ -49,6 +51,7 @@ const InputField = ({
           onBlur={() => {
             setOnFocus(false);
           }}
+          editable={disabled}
           keyboardType={keyboardType || "default"}
           onChangeText={handleChange(id)}
           onFocus={() => {
@@ -60,7 +63,7 @@ const InputField = ({
             touched[id] && errors[id] && focus && styles.fieldError,
             touched[id] && errors[id] && !focus && styles.notFocusedFieldError,
           ]}
-          value={values[id]}
+          value={values?.[id] ?? ''}
         />
         <Pressable
           style={[styles.icon]}

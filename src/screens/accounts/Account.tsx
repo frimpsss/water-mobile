@@ -6,7 +6,7 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { colors, hp, sizes, wp, screenNames } from "@/constants";
 import SettingsTab from "@/components/settings/SettingsTab";
 import { ArrowRight2 } from "iconsax-react-native";
@@ -14,13 +14,18 @@ import Profile from "@/components/settings/Profile";
 import { font_styles } from "@/components/core/Text";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as SecureStore from "expo-secure-store";
+import useUserData from "@/hooks/useUserData";
 const Account = ({ navigation }: any) => {
+  const { userData } = useUserData();
   return (
     <View style={[styles.screen]}>
       <SafeAreaView>
         <Text style={[font_styles["h2"], styles.heading]}>Settings</Text>
         <View style={styles.profile}>
-          <Profile />
+          <Profile
+            name={userData?.name ?? ""}
+            meterId={userData?.meterId?._id ?? ""}
+          />
         </View>
       </SafeAreaView>
       <ScrollView style={[styles.sv]}>
@@ -35,7 +40,9 @@ const Account = ({ navigation }: any) => {
                 size={hp(24)}
               />
             }
-            onTap={() => {}}
+            onTap={() => {
+              navigation.navigate(screenNames.accounts.personalInfo);
+            }}
             description={"View and edit personal data."}
           />
           <SettingsTab
@@ -67,7 +74,7 @@ const Account = ({ navigation }: any) => {
                 size={hp(24)}
               />
             }
-            onTap={() => {}}
+            onTap={async () => {}}
             description={"Manage your account"}
           />
           <SettingsTab

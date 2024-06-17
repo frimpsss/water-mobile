@@ -1,7 +1,7 @@
 export const screenNames = {
   home: {
     initialScreen: "home",
-    consumptionDetails: 'consumption_details',
+    consumptionDetails: "consumption_details",
   },
   tabs: {
     main: "tabs",
@@ -13,6 +13,7 @@ export const screenNames = {
   accounts: {
     main: "account",
     initialScreen: "accountSceen",
+    personalInfo: "personal_info",
   },
   auth: {
     onboarding: "onboarding",
@@ -28,6 +29,6 @@ export const screenNames = {
   },
   notification: {
     all: "notification_screen",
-    single: 'single_notification'
+    single: "single_notification",
   },
 };
