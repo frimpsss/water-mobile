@@ -9,21 +9,22 @@ import { ScrollView } from "react-native-gesture-handler";
 import Today from "@/components/home/Today";
 import NotificationComponent from "@/components/home/NotificationsComponent";
 import { useQuery } from "@tanstack/react-query";
-import * as SecureStore from 'expo-secure-store'
+import * as SecureStore from "expo-secure-store";
 import { getUserInfo } from "@/api/queries/user";
+import useUserData from "@/hooks/useUserData";
 
 export default function Home({ navigation }: any) {
-  const {data, isLoading, isError } = useQuery({
-    queryKey: ['user-info'], 
-    queryFn: getUserInfo
-  })
+  const { userData } = useUserData();
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["user-info"],
+    queryFn: getUserInfo,
+  });
 
-
-  useEffect(()=>{
-    if(!isLoading && !isError){
-      SecureStore.setItem("user", JSON.stringify(data?.data?.data))
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      SecureStore.setItem("user", JSON.stringify(data?.data?.data));
     }
-  },[])
+  }, []);
 
   return (
     <View style={[styles.screen]}>
@@ -31,7 +32,9 @@ export default function Home({ navigation }: any) {
         <Text style={[font_styles["p1"], styles.heading]}>
           {getGreeting()},
         </Text>
-        <Text style={[font_styles["h3"], styles.name]}>Frimpong</Text>
+        <Text style={[font_styles["h3"], styles.name]}>
+          {userData?.name?.split(" ")?.[1]}
+        </Text>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
