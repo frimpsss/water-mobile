@@ -84,3 +84,17 @@ export function formatDateTime(dateString: string): string {
 
   return `${month} ${day}, ${year}  ${time}`;
 }
+
+export function isTimeInCurrentHour(timeString: string): boolean {
+  const givenDate = new Date(timeString);
+  const currentDate = new Date();
+
+  // Compare the year, month, day, and hour
+  const isSameYear =
+    givenDate.getUTCFullYear() === currentDate.getUTCFullYear();
+  const isSameMonth = givenDate.getUTCMonth() === currentDate.getUTCMonth();
+  const isSameDay = givenDate.getUTCDate() === currentDate.getUTCDate();
+  const isSameHour = givenDate.getUTCHours() === currentDate.getUTCHours();
+
+  return isSameYear && isSameMonth && isSameDay && isSameHour;
+}

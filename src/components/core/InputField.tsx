@@ -51,7 +51,7 @@ const InputField = ({
           onBlur={() => {
             setOnFocus(false);
           }}
-          editable={disabled}
+          editable={!disabled}
           keyboardType={keyboardType || "default"}
           onChangeText={handleChange(id)}
           onFocus={() => {

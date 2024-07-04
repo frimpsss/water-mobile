@@ -8,11 +8,12 @@ import { allNotifications } from "@/api/queries/notifications";
 import EmptyStateComponent from "@/components/core/EmptyStateComponent";
 import NotificationList from "@/components/notifications/NotificationList";
 const AllNotifications = ({ navigation }: { navigation: any }) => {
-  const { data, isLoading, refetch, isRefetching } = useQuery({
+  const { data, isLoading, refetch, isRefetching, error } = useQuery({
     queryKey: ["all-notifications"],
     queryFn: allNotifications,
   });
 
+  console.log(error)
   useEffect(() => {
     refetch();
   }, []);
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
   heading: {
     marginVertical: hp(sizes.LG),
     color: colors.mantis[950],
-    paddingHorizontal: wp(20),
+    // paddingHorizontal: wp(20),
     paddingTop: hp(20),
   },
   date: {

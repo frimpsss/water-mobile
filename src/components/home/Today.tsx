@@ -3,8 +3,12 @@ import React from "react";
 import HomeSectionsLayout from "./HomeSectionsLayout";
 import { colors, hp, wp } from "@/constants";
 import { font_styles } from "../core/Text";
+import useMeterReadingFilter from "@/hooks/useMeterReadingFilter";
 
 const Today = ({ navigation, title }: { navigation: any; title: string }) => {
+  const { todaysStats } = useMeterReadingFilter({
+    meterId: "meter-1",
+  });
   return (
     <HomeSectionsLayout title={title} morePage={""} navigation={navigation}>
       <View style={[styles.container]}>
@@ -19,11 +23,15 @@ const Today = ({ navigation, title }: { navigation: any; title: string }) => {
           ]}
         >
           <Text style={[font_styles["h5"], styles.unit]}>GHS</Text>
-          <Text style={[font_styles["h2"], styles.value]}>202.34</Text>
+          <Text style={[font_styles["h2"], styles.value]} numberOfLines={1}>
+            {Number(todaysStats.amount).toFixed(2)}
+          </Text>
         </View>
         <View style={[styles.view, { paddingLeft: wp(10) }]}>
           <Text style={[font_styles["h5"], styles.unit]}>Gal</Text>
-          <Text style={[font_styles["h2"], styles.value]}>542.43</Text>
+          <Text style={[font_styles["h2"], styles.value]} numberOfLines={1}>
+            {Number(todaysStats.volume).toFixed(2)}
+          </Text>
         </View>
       </View>
     </HomeSectionsLayout>

@@ -21,7 +21,7 @@ const PersonalData = ({ navigation }: { navigation: any }) => {
           contentContainerStyle={[
             {
               gap: hp(20),
-              paddingBottom: hp(30)
+              paddingBottom: hp(30),
             },
           ]}
         >
@@ -35,6 +35,7 @@ const PersonalData = ({ navigation }: { navigation: any }) => {
             handleChange={() => {}}
             handleBlur={() => {}}
             touched={() => {}}
+            disabled
           />
           <InputField
             label={"Email"}
@@ -46,6 +47,7 @@ const PersonalData = ({ navigation }: { navigation: any }) => {
             handleChange={() => {}}
             handleBlur={() => {}}
             touched={() => {}}
+            disabled
           />
           <InputField
             label={"Name"}
@@ -56,6 +58,7 @@ const PersonalData = ({ navigation }: { navigation: any }) => {
             type={"string"}
             handleChange={() => {}}
             handleBlur={() => {}}
+            disabled
             touched={() => {}}
           />
           <InputField
@@ -68,6 +71,7 @@ const PersonalData = ({ navigation }: { navigation: any }) => {
             handleChange={() => {}}
             handleBlur={() => {}}
             touched={() => {}}
+            disabled
           />
           <InputField
             label={"Meter number"}
@@ -79,6 +83,7 @@ const PersonalData = ({ navigation }: { navigation: any }) => {
             handleChange={() => {}}
             handleBlur={() => {}}
             touched={() => {}}
+            disabled
           />
           <InputField
             label={"GPS Address"}
@@ -90,6 +95,7 @@ const PersonalData = ({ navigation }: { navigation: any }) => {
             handleChange={() => {}}
             handleBlur={() => {}}
             touched={() => {}}
+            disabled
           />
           <InputField
             label={"Date Joined"}
@@ -103,6 +109,7 @@ const PersonalData = ({ navigation }: { navigation: any }) => {
             handleChange={() => {}}
             handleBlur={() => {}}
             touched={() => {}}
+            disabled
           />
         </ScrollView>
       </View>
@@ -114,7 +121,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(20),
     flex: 1,
     backgroundColor: colors.white[50],
-
   },
 });
 export default PersonalData;

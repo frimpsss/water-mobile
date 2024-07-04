@@ -1,10 +1,12 @@
 import { screenNames } from "@/constants";
+import useAuthNavigation from "@/hooks/useAuthState";
 import { HomeScreen } from "@/screens";
 import ConsumptionData from "@/screens/home/ConsumptionData";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
-export default function HomeStack() {
+export default function HomeStack({ navigation }) {
+  useAuthNavigation();
   return (
     <Stack.Navigator
       screenOptions={{

@@ -45,8 +45,11 @@ api.interceptors.response.use(
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
-    if (error.response.status == 401 && !originalRequest?._retry) {
+    console.log(error)
+    if (error.response.status == (403) && !originalRequest?._retry) {
+      console.log("interceptor running")
       originalRequest._retry = true;
+      SecureStore.deleteItemAsync("auth")
     }
 
     return Promise.reject(error);

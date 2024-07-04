@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AllNotifications from "@/screens/notification/AllNotifications";
 import SingleNotificationView from "@/screens/notification/SingleNotificationView";
 import React from "react";
+import useAuthNavigation from "@/hooks/useAuthState";
 const Stack = createStackNavigator();
 export default function NotificationStack({
   navigation,
@@ -10,6 +11,7 @@ export default function NotificationStack({
   navigation: any;
   route: any;
 }) {
+  useAuthNavigation();
   return (
     <Stack.Navigator
       screenOptions={{

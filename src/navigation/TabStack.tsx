@@ -7,18 +7,11 @@ import React, { useEffect } from "react";
 import BillingStack from "./BillingStack";
 import NotificationStack from "./NotificationsStack";
 import * as SecureStorage from "expo-secure-store";
+import useAuthNavigation from "@/hooks/useAuthState";
 const Tab = createBottomTabNavigator();
 
 export default function TabStack({ navigation }: { navigation: any }) {
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      if (!SecureStorage.getItem("auth")) {
-        navigation.navigate(screenNames.auth.login);
-      }
-    });
-
-    return unsubscribe;
-  }, [navigation]);
+  useAuthNavigation();
   return (
     <Tab.Navigator
       screenOptions={{

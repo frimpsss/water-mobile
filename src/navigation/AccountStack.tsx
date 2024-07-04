@@ -1,10 +1,12 @@
 import { screenNames } from "@/constants";
+import useAuthNavigation from "@/hooks/useAuthState";
 import { AccountScreen } from "@/screens";
 import PersonalData from "@/screens/accounts/PersonalData";
 import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
-const AccountStack = () => {
+const AccountStack = ({ navigation }) => {
+  useAuthNavigation();
   return (
     <Stack.Navigator
       screenOptions={{

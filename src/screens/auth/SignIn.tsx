@@ -31,6 +31,7 @@ const SignIn = ({ navigation }) => {
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: logIn,
     onError(error, variables, context) {
+      console.log(error)
       Burnt.toast({
         title: error?.message,
         preset: "error",

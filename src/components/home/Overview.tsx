@@ -6,57 +6,40 @@ import { font_styles } from "../core/Text";
 import CustomAnimatedScale from "../core/ScaleView";
 import HomeSectionsLayout from "./HomeSectionsLayout";
 import XAxisLabel from "./XAxisLabel";
-import database from "@react-native-firebase/database";
+import useMeterReadingFilter from "@/hooks/useMeterReadingFilter";
 
 const Overview = ({ navigation }) => {
+  const [activeCategory, setActiveCategory] = useState("H");
+  const categories = ["H", "D", "W", "M", "Y"];
   const [viewWidth, setViewWidth] = useState(0);
   const [chartData, setChartData] = useState([]);
 
-  useEffect(() => {
-    const meter1Ref = database().ref("/readings/meter-1");
-    // To-Do Format Data properly
-    const onValueChange = meter1Ref.on("value", (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        const formattedData = Object.values(data)
-          .map((reading: { value: string; timeStamp: string }) => {
-            const value = parseFloat(reading.value);
-            const timeStamp = `${new Date(
-              reading.timeStamp
-            ).getHours()}:${new Date(reading.timeStamp).getMinutes()}`;
-
-            // Validate the data
-            if (isNaN(value)) {
-              console.error("Invalid data point: ", reading);
-              return null;
-            }
-
-            return {
-              value,
-              labelComponent: () => <XAxisLabel text={timeStamp} />,
-            };
-          })
-          .filter((dataPoint) => dataPoint !== null);
-
-        setChartData(formattedData);
-      } else {
-        console.log("No data available");
-      }
-    });
-
-    // Cleanup function
-    return () => {
-      meter1Ref.off("value", onValueChange);
-    };
-  }, []);
+  const { data, graphMax } = useMeterReadingFilter({
+    meterId: "meter-1",
+    filter: activeCategory,
+  });
+  const [max, setmax] = useState(10)
 
   const onLayout = (event) => {
     const { width } = event.nativeEvent.layout;
     setViewWidth(width);
   };
 
-  const [activeCategory, setActiveCategory] = useState("H");
-  const categories = ["H", "D", "M", "6M", "1Y", "ALL"];
+  useEffect(() => {
+    setChartData(() => {
+      return data?.map((e: any) => {
+        return {
+          value: e?.value,
+          labelComponent: () => <XAxisLabel text={e?.time} />,
+        };
+      });
+    });
+    
+    if(!Number.isNaN(graphMax)){
+      setmax(graphMax)
+    }
+  }, [data]);
+
 
   return (
     <HomeSectionsLayout
@@ -71,7 +54,7 @@ const Overview = ({ navigation }) => {
             xAxisIndicesWidth={10}
             data={chartData}
             noOfSections={3}
-            maxValue={6}
+            maxValue={max}
             isAnimated
             areaChart
             // hideOrigin

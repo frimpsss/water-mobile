@@ -15,6 +15,8 @@ export async function logIn({
     });
     return resp;
   } catch (error) {
+
+    console.log(error)
     if (axios.isAxiosError(error)) {
       throw new Error(error.response?.data?.message || "An error occurred");
     }

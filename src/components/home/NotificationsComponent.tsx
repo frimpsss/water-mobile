@@ -27,7 +27,7 @@ const Notifications = ({ navigation }) => {
   return (
     <HomeSectionsLayout
       title={"Recent Notification"}
-      morePage={screenNames.notification.all}
+      morePage={screenNames.tabs.notification}
       navigation={navigation}
     >
       <View style={[styles.container]}>
