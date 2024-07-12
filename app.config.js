@@ -40,6 +40,7 @@ export default {
       "expo-font",
       "expo-secure-store",
       "@react-native-firebase/app",
+      ["expo-notifications"],
       [
         "expo-build-properties",
         {

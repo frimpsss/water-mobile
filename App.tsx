@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { StatusBar } from "expo-status-bar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { usePushNotifications } from "@/hooks/usePushNotification";
 
 const Client = new QueryClient();
 SplashScreen.preventAutoHideAsync();
@@ -33,7 +34,7 @@ export default function App() {
   };
 
   const [fontsLoaded] = useFonts(fonts);
-
+  usePushNotifications()
   useEffect(() => {
     (async () => {
       if (fontsLoaded && appReady) {

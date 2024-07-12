@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import database from "@react-native-firebase/database";
 import _ from "lodash";
 import { getCurrentDateInFormat, isTimeInCurrentHour } from "@/utils";
-interface ItodayStats {
+export interface ItodayStats {
   amount: number;
   volume: number;
 }
@@ -28,9 +28,7 @@ const useMeterReadingFilter = ({
     volume: 0,
   });
   useEffect(() => {
-    // TO-BE-CHANGED
     const PRICE_PER_GAL = 0.104;
-
     const readings = database().ref(`/readings/${meterId}`);
     const onValueChange = readings?.on("value", (snapshot) => {
       const d = snapshot.val();
@@ -39,7 +37,9 @@ const useMeterReadingFilter = ({
         const rawData = Object.values(d).map(
           (r: { value: string; timeStamp: string }) => {
             const value = parseFloat(r?.value);
-            const timeStamp = new Date(r?.timeStamp).toISOString();
+            const timeStamp = new Date(
+              Number(r?.timeStamp) * 1000
+            ).toISOString();
             return {
               value,
               timeStamp,
@@ -64,7 +64,7 @@ const useMeterReadingFilter = ({
           return e?.d == getCurrentDateInFormat();
         });
 
-        const totals: ItodayStats = todaysReadings.readings.reduce(
+        const totals: ItodayStats = todaysReadings?.readings?.reduce(
           (acc: { amount: number; volume: any }, e: { value: number }) => {
             if (!isNaN(e.value)) {
               acc.amount += e.value * PRICE_PER_GAL;
@@ -117,7 +117,7 @@ const useMeterReadingFilter = ({
     return () => {
       readings.off("value", onValueChange);
     };
-  }, [filter]);
+  }, [filter, meterId]);
 
   return { data, todaysStats, maxmin, graphMax };
 };

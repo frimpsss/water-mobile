@@ -7,25 +7,26 @@ import CustomAnimatedScale from "../core/ScaleView";
 import HomeSectionsLayout from "./HomeSectionsLayout";
 import XAxisLabel from "./XAxisLabel";
 import useMeterReadingFilter from "@/hooks/useMeterReadingFilter";
-
+import useUserData from "@/hooks/useUserData";
 const Overview = ({ navigation }) => {
+  const { userData } = useUserData();
   const [activeCategory, setActiveCategory] = useState("H");
   const categories = ["H", "D", "W", "M", "Y"];
   const [viewWidth, setViewWidth] = useState(0);
   const [chartData, setChartData] = useState([]);
 
   const { data, graphMax } = useMeterReadingFilter({
-    meterId: "meter-1",
+    meterId: userData?.meterId?._id,
     filter: activeCategory,
   });
-  const [max, setmax] = useState(10)
+  const [max, setmax] = useState(10);
 
   const onLayout = (event) => {
     const { width } = event.nativeEvent.layout;
     setViewWidth(width);
   };
-
   useEffect(() => {
+   if(data){
     setChartData(() => {
       return data?.map((e: any) => {
         return {
@@ -34,12 +35,12 @@ const Overview = ({ navigation }) => {
         };
       });
     });
-    
-    if(!Number.isNaN(graphMax)){
-      setmax(graphMax)
-    }
-  }, [data]);
 
+    if (!Number.isNaN(graphMax)) {
+      setmax(graphMax);
+    }
+   }
+  }, [data]);
 
   return (
     <HomeSectionsLayout
