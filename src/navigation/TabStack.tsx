@@ -3,18 +3,19 @@ import { screenNames } from "@/constants";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeStack from "./HomeStack";
 import AccountStack from "./AccountStack";
-import React, { useEffect } from "react";
+import React from "react";
 import BillingStack from "./BillingStack";
 import NotificationStack from "./NotificationsStack";
 import useAuthNavigation from "@/hooks/useAuthState";
-import { useFetchUserInfo } from "@/hooks/useFetchUserData";
+import { usePushNotifications } from "@/hooks/usePushNotification";
 const Tab = createBottomTabNavigator();
 
 export default function TabStack({ navigation }: { navigation: any }) {
-  const { refetch, isFetching, isError } = useFetchUserInfo();
-  useEffect(() => {
-    refetch();
-  }, [refetch, isFetching]);
+  // const { refetch, isFetching, isError } = useFetchUserInfo();
+  // useEffect(() => {
+  //   refetch();
+  // }, [refetch, isFetching]);
+  usePushNotifications();
   useAuthNavigation();
   return (
     <Tab.Navigator

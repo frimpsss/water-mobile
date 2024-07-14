@@ -5,6 +5,7 @@ import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
 import { api } from "@/api/config";
 import { Alert } from "react-native";
+import { AxiosError } from "axios";
 
 export interface PushNotificationState {
   expoPushToken?: Notifications.ExpoPushToken;
@@ -71,9 +72,17 @@ export const usePushNotifications = () => {
     if (auth) {
       registerForPushNotificationsAsync().then(async (token) => {
         // setExpoPushToken(token);
-        await api.post("api/push/register-token", {
-          token: token,
-        });
+        try {
+          Alert.alert("Expo push token: ", token);
+          await api.post("api/push/register-token", {
+            token: token,
+          });
+        } catch (error) {
+          if (error instanceof AxiosError) {
+            Alert.alert(error.response.data?.message);
+            console.log(error.response.data);
+          }
+        }
       });
     }
 
@@ -84,7 +93,7 @@ export const usePushNotifications = () => {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+        // console.log(response);
       });
 
     return () => {

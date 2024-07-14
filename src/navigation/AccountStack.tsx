@@ -8,10 +8,10 @@ import { useEffect } from "react";
 const Stack = createStackNavigator();
 
 const AccountStack = ({ navigation }) => {
-  const { refetch, isFetching, isError } = useFetchUserInfo();
-  useEffect(() => {
-    refetch();
-  }, [refetch, isFetching]);
+  // const { refetch, isFetching, isError } = useFetchUserInfo();
+  // useEffect(() => {
+  //   refetch();
+  // }, [refetch, isFetching]);
   useAuthNavigation();
   return (
     <Stack.Navigator

@@ -25,13 +25,13 @@ import { logIn } from "@/api/mutations/auth";
 import KModal from "@/components/core/KModal";
 import * as SecureStrorage from "expo-secure-store";
 import * as Burnt from "burnt";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignIn = ({ navigation }) => {
   const formRef = useRef(null);
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: logIn,
     onError(error, variables, context) {
-      console.log(error)
       Burnt.toast({
         title: error?.message,
         preset: "error",
@@ -40,7 +40,8 @@ const SignIn = ({ navigation }) => {
     },
     onSuccess(data, variables, context) {
       if (data?.data?.status) {
-        SecureStrorage.setItem("auth", data?.data?.data);
+        SecureStrorage.setItem("auth", data?.data?.data?.token);
+        setUserData(data?.data?.data?.details);
         navigation.navigate(screenNames.tabs.main);
       } else {
         Burnt.toast({
@@ -54,7 +55,13 @@ const SignIn = ({ navigation }) => {
       formRef.current.resetForm();
     },
   });
-
+  async function setUserData(data: any) {
+    try {
+      await AsyncStorage.setItem("user", JSON.stringify(data));
+    } catch (error) {
+      console.error(error);
+    }
+  }
   function handleSubmit() {
     if (formRef.current.isValid && formRef.current.dirty) {
       setTimeout(() => {

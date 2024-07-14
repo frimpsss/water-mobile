@@ -11,7 +11,6 @@ import NotificationComponent from "@/components/home/NotificationsComponent";
 import useUserData from "@/hooks/useUserData";
 export default function Home({ navigation }: any) {
   const { userData } = useUserData();
-  console.log(userData);
   return (
     <View style={[styles.screen]}>
       <SafeAreaView edges={["top"]}>
