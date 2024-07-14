@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import TabStack from "./TabStack";
 import AuthStack from "./AuthStack";
 import { useEffect, useState } from "react";
+
 const Stack = createStackNavigator();
 export default function RootStack() {
   const [initialRouteName, setInitialRouteName] = useState<string>();

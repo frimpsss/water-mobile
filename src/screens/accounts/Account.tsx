@@ -15,6 +15,7 @@ import { font_styles } from "@/components/core/Text";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as SecureStore from "expo-secure-store";
 import useUserData from "@/hooks/useUserData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Account = ({ navigation }: any) => {
   const { userData } = useUserData();
   return (
@@ -89,7 +90,7 @@ const Account = ({ navigation }: any) => {
             }
             onTap={async () => {
               await SecureStore.deleteItemAsync("auth");
-
+              await AsyncStorage.removeItem("user");
               navigation.replace(screenNames.auth.main);
             }}
           />

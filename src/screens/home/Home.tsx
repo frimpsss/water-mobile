@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
-import { colors, fonts, hp, sizes, wp } from "@/constants";
+import { colors, hp, sizes, wp } from "@/constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { font_styles } from "@/components/core/Text";
 import { getGreeting } from "@/utils";
@@ -8,24 +8,10 @@ import Overview from "@/components/home/Overview";
 import { ScrollView } from "react-native-gesture-handler";
 import Today from "@/components/home/Today";
 import NotificationComponent from "@/components/home/NotificationsComponent";
-import { useQuery } from "@tanstack/react-query";
-import * as SecureStore from "expo-secure-store";
-import { getUserInfo } from "@/api/queries/user";
 import useUserData from "@/hooks/useUserData";
-
 export default function Home({ navigation }: any) {
   const { userData } = useUserData();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["user-info"],
-    queryFn: getUserInfo,
-  });
-
-  useEffect(() => {
-    if (!isLoading && !isError) {
-      SecureStore.setItem("user", JSON.stringify(data?.data?.data));
-    }
-  }, []);
-
+  console.log(userData);
   return (
     <View style={[styles.screen]}>
       <SafeAreaView edges={["top"]}>
@@ -33,7 +19,7 @@ export default function Home({ navigation }: any) {
           {getGreeting()},
         </Text>
         <Text style={[font_styles["h3"], styles.name]}>
-          {userData?.name?.split(" ")?.[1]}
+          {userData?.name?.split(" ")?.[1] ?? ""}
         </Text>
         <ScrollView
           showsVerticalScrollIndicator={false}

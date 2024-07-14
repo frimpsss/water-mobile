@@ -6,11 +6,15 @@ import AccountStack from "./AccountStack";
 import React, { useEffect } from "react";
 import BillingStack from "./BillingStack";
 import NotificationStack from "./NotificationsStack";
-import * as SecureStorage from "expo-secure-store";
 import useAuthNavigation from "@/hooks/useAuthState";
+import { useFetchUserInfo } from "@/hooks/useFetchUserData";
 const Tab = createBottomTabNavigator();
 
 export default function TabStack({ navigation }: { navigation: any }) {
+  const { refetch, isFetching, isError } = useFetchUserInfo();
+  useEffect(() => {
+    refetch();
+  }, [refetch, isFetching]);
   useAuthNavigation();
   return (
     <Tab.Navigator

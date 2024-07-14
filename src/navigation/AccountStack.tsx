@@ -1,11 +1,17 @@
 import { screenNames } from "@/constants";
 import useAuthNavigation from "@/hooks/useAuthState";
+import { useFetchUserInfo } from "@/hooks/useFetchUserData";
 import { AccountScreen } from "@/screens";
 import PersonalData from "@/screens/accounts/PersonalData";
 import { createStackNavigator } from "@react-navigation/stack";
+import { useEffect } from "react";
 const Stack = createStackNavigator();
 
 const AccountStack = ({ navigation }) => {
+  const { refetch, isFetching, isError } = useFetchUserInfo();
+  useEffect(() => {
+    refetch();
+  }, [refetch, isFetching]);
   useAuthNavigation();
   return (
     <Stack.Navigator

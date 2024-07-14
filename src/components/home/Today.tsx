@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import HomeSectionsLayout from "./HomeSectionsLayout";
 import { colors, hp, wp } from "@/constants";
 import { font_styles } from "../core/Text";
-import useMeterReadingFilter, { ItodayStats } from "@/hooks/useMeterReadingFilter";
+import useMeterReadingFilter, {
+  ItodayStats,
+} from "@/hooks/useMeterReadingFilter";
 import useUserData from "@/hooks/useUserData";
 
 const Today = ({ navigation, title }: { navigation: any; title: string }) => {
@@ -11,13 +13,21 @@ const Today = ({ navigation, title }: { navigation: any; title: string }) => {
   const { todaysStats } = useMeterReadingFilter({
     meterId: userData?.meterId?._id,
   });
+
   const [today, setToday] = useState<ItodayStats>({
-    amount: 0, 
-    volume: 0
-  })
-  useEffect(()=>{
-    setToday(todaysStats)
-  }, [todaysStats])
+    amount: 0,
+    volume: 0,
+  });
+  useEffect(() => {
+    setToday((p) => {
+      return (
+        today || {
+          amount: 0,
+          volume: 0,
+        }
+      );
+    });
+  }, [todaysStats]);
   return (
     <HomeSectionsLayout title={title} morePage={""} navigation={navigation}>
       <View style={[styles.container]}>
@@ -33,13 +43,13 @@ const Today = ({ navigation, title }: { navigation: any; title: string }) => {
         >
           <Text style={[font_styles["h5"], styles.unit]}>GHS</Text>
           <Text style={[font_styles["h2"], styles.value]} numberOfLines={1}>
-            {Number(today.amount).toFixed(2)}
+            {Number(today?.amount)?.toFixed(2)}
           </Text>
         </View>
         <View style={[styles.view, { paddingLeft: wp(10) }]}>
           <Text style={[font_styles["h5"], styles.unit]}>Gal</Text>
           <Text style={[font_styles["h2"], styles.value]} numberOfLines={1}>
-            {Number(today.volume).toFixed(2)}
+            {Number(today?.volume)?.toFixed(2)}
           </Text>
         </View>
       </View>

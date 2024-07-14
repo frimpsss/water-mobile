@@ -1,6 +1,6 @@
+import { CommonActions } from "@react-navigation/native";
 import axios, { InternalAxiosRequestConfig } from "axios";
 import * as SecureStore from "expo-secure-store";
-
 export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_BASE_URL,
   withCredentials: true,
@@ -45,11 +45,9 @@ api.interceptors.response.use(
     const originalRequest = error.config as InternalAxiosRequestConfig & {
       _retry?: boolean;
     };
-    console.log(error)
-    if (error.response.status == (403) && !originalRequest?._retry) {
-      console.log("interceptor running")
+    if (error.response.status == 403 && !originalRequest?._retry) {
       originalRequest._retry = true;
-      SecureStore.deleteItemAsync("auth")
+      SecureStore.deleteItemAsync("auth");
     }
 
     return Promise.reject(error);
