@@ -71,15 +71,12 @@ export const usePushNotifications = () => {
     const auth = SecureStore.getItem("auth");
     if (auth) {
       registerForPushNotificationsAsync().then(async (token) => {
-        // setExpoPushToken(token);
         try {
-          Alert.alert("Expo push token: ", token);
           await api.post("api/push/register-token", {
-            token: token,
+            token: token?.data,
           });
         } catch (error) {
           if (error instanceof AxiosError) {
-            Alert.alert(error.response.data?.message);
             console.log(error.response.data);
           }
         }
@@ -88,6 +85,7 @@ export const usePushNotifications = () => {
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
+        // console.log(notification)
         // setNotification(notification);
       });
 
