@@ -25,7 +25,7 @@ const Account = ({ navigation }: any) => {
         <View style={styles.profile}>
           <Profile
             name={userData?.name ?? ""}
-            meterId={userData?.meterId?._id ?? ""}
+            meterId={userData?.meterId?.gpsAddress ?? ""}
           />
         </View>
       </SafeAreaView>

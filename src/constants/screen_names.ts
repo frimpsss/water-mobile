@@ -26,6 +26,8 @@ export const screenNames = {
   },
   billing: {
     index: "billing_home",
+    single_bill: 'single_bill',
+    single_payment: 'single_payment',
   },
   notification: {
     all: "notification_screen",

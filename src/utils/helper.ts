@@ -39,6 +39,13 @@ export const groupByDate = (array: any[]) => {
     notifications: grouped[date],
   }));
 };
+export const groupByMonthAndYear = (array: any[]) => {
+  const grouped = _.groupBy(array, (obj) => obj.createdAt.split("-")[0]);
+  return Object.keys(grouped).map((date) => ({
+    date,
+    bills: grouped[date],
+  }));
+};
 
 export const getCurrentDateInFormat = () => {
   const today = new Date();
@@ -50,7 +57,7 @@ export const getCurrentDateInFormat = () => {
   return formattedDate;
 };
 
-const months = [
+export const months = [
   "January",
   "February",
   "March",
@@ -97,4 +104,15 @@ export function isTimeInCurrentHour(timeString: string): boolean {
   const isSameHour = givenDate.getUTCHours() === currentDate.getUTCHours();
 
   return isSameYear && isSameMonth && isSameDay && isSameHour;
+}
+export function getMonthAndYear(dateTimeStr: string) {
+  const date = new Date(dateTimeStr);
+
+  const month = date.getMonth() + 1; 
+  const year = date.getFullYear();
+
+  return {
+    month,
+    year,
+  };
 }

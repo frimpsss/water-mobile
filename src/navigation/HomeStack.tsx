@@ -6,7 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
 export default function HomeStack({ navigation }) {
-  useAuthNavigation();
+ //
   return (
     <Stack.Navigator
       screenOptions={{

@@ -13,7 +13,6 @@ const AllNotifications = ({ navigation }: { navigation: any }) => {
     queryFn: allNotifications,
   });
 
-  console.log(error)
   useEffect(() => {
     refetch();
   }, []);

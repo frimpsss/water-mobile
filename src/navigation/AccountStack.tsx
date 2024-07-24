@@ -12,7 +12,7 @@ const AccountStack = ({ navigation }) => {
   // useEffect(() => {
   //   refetch();
   // }, [refetch, isFetching]);
-  useAuthNavigation();
+ //
   return (
     <Stack.Navigator
       screenOptions={{

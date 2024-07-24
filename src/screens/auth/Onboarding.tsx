@@ -4,13 +4,18 @@ import AuthActionButton from "@/components/auth/AuthActionButton";
 import { colors, hp, screenNames, sizes, wp } from "@/constants";
 import { font_styles } from "@/components/core/Text";
 import * as SecureStorage from "expo-secure-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Onboarding = ({ navigation }: any) => {
   useEffect(() => {
-    const token = SecureStorage.getItem("auth");
-    if (token) {
-      navigation.replace(screenNames.tabs.main);
+    async function init() {
+      const token = await SecureStorage.getItemAsync("auth");
+      const user = await AsyncStorage.getItem("user");
+      if (token && user) {
+        navigation.replace(screenNames.tabs.main);
+      }
     }
+    init();
   }, []);
   return (
     <View style={styles.screen}>

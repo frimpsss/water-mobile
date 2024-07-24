@@ -1,14 +1,15 @@
 import { View, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useEffect } from "react";
-import BillList from "@/components/billing/AllBillsList";
 import { useQuery } from "@tanstack/react-query";
-import { allBills } from "@/api/queries/finance";
-import { colors, hp, sizes, wp } from "@/constants";
+import { allBills, paymentHistory } from "@/api/queries/finance";
 import EmptyStateComponent from "@/components/core/EmptyStateComponent";
-const BillingScreen = () => {
+import { colors, hp, sizes, wp } from "@/constants";
+import AllPayments from "@/components/billing/AllPayments";
+
+const Payments = () => {
   const { isFetching, data, refetch, isRefetching } = useQuery({
-    queryFn: allBills,
-    queryKey: ["all-bills"],
+    queryFn: paymentHistory,
+    queryKey: ["all-payments"],
   });
   useEffect(() => {
     refetch();
@@ -18,9 +19,9 @@ const BillingScreen = () => {
     <View style={[styles.screen]}>
       {isFetching && <ActivityIndicator />}
       {!isFetching && data?.data?.data?.length == 0 ? (
-        <EmptyStateComponent text="No Bills" />
+        <EmptyStateComponent text="No payments records" />
       ) : (
-        <BillList
+        <AllPayments
           isRefetching={isRefetching}
           refetch={refetch}
           data={data?.data?.data}
@@ -29,6 +30,7 @@ const BillingScreen = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   screen: {
     backgroundColor: colors.black[50],
@@ -82,4 +84,4 @@ const styles = StyleSheet.create({
     marginBottom: hp(15),
   },
 });
-export default BillingScreen;
+export default Payments;

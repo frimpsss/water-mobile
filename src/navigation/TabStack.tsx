@@ -11,10 +11,6 @@ import { usePushNotifications } from "@/hooks/usePushNotification";
 const Tab = createBottomTabNavigator();
 
 export default function TabStack({ navigation }: { navigation: any }) {
-  // const { refetch, isFetching, isError } = useFetchUserInfo();
-  // useEffect(() => {
-  //   refetch();
-  // }, [refetch, isFetching]);
   usePushNotifications();
   useAuthNavigation();
   return (

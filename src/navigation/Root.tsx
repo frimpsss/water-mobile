@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import TabStack from "./TabStack";
 import AuthStack from "./AuthStack";
 import { useEffect, useState } from "react";
+import useAuthNavigation from "@/hooks/useAuthState";
 
 const Stack = createStackNavigator();
 export default function RootStack() {
@@ -11,6 +12,7 @@ export default function RootStack() {
   useEffect(() => {
     setInitialRouteName(screenNames.auth.onboarding);
   }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator

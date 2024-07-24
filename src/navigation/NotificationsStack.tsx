@@ -11,7 +11,7 @@ export default function NotificationStack({
   navigation: any;
   route: any;
 }) {
-  useAuthNavigation();
+ //
   return (
     <Stack.Navigator
       screenOptions={{

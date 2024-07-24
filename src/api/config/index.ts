@@ -3,11 +3,9 @@ import axios, { InternalAxiosRequestConfig } from "axios";
 import * as SecureStore from "expo-secure-store";
 export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_BASE_URL,
-  withCredentials: true,
 });
 export const apiAuthNotRequired = axios.create({
   baseURL: process.env.EXPO_PUBLIC_BASE_URL,
-  withCredentials: true,
 });
 api.interceptors.request.use(
   (config: any) => {
@@ -22,8 +20,8 @@ api.interceptors.request.use(
 );
 
 api.interceptors.request.use(
-  (config: any) => {
-    const token = getToken();
+  async (config: any) => {
+    const token = await SecureStore.getItemAsync("auth");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -33,6 +31,7 @@ api.interceptors.request.use(
     return config;
   },
   (error) => {
+    console.log(JSON.stringify(error))
     return Promise.reject(error);
   }
 );
@@ -47,12 +46,17 @@ api.interceptors.response.use(
     };
     if (error.response.status == 403 && !originalRequest?._retry) {
       originalRequest._retry = true;
-      SecureStore.deleteItemAsync("auth");
+      await SecureStore.deleteItemAsync("auth");
     }
 
     return Promise.reject(error);
   }
 );
-const getToken = () => {
-  return SecureStore.getItem("auth");
+const getToken = async () => {
+  try {
+    const token = await SecureStore.getItemAsync("auth");
+    return token;
+  } catch (error) {
+    return 123;
+  }
 };
