@@ -108,7 +108,7 @@ export function isTimeInCurrentHour(timeString: string): boolean {
 export function getMonthAndYear(dateTimeStr: string) {
   const date = new Date(dateTimeStr);
 
-  const month = date.getMonth() + 1; 
+  const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
   return {
@@ -116,3 +116,29 @@ export function getMonthAndYear(dateTimeStr: string) {
     year,
   };
 }
+
+export function getWeekOfYear(date: Date): number {
+  const startOfYear = new Date(date.getFullYear(), 0, 1);
+  const pastDaysOfYear = (date.getTime() - startOfYear.getTime()) / 86400000;
+  return Math.ceil((pastDaysOfYear + startOfYear.getDay() + 1) / 7);
+}
+
+export function getMonthOfYear(date: Date): string {
+  const month = date.getMonth(); // Months are 0-based, so add 1
+  const year = date.getFullYear();
+  return `${monthNames[month]}`; // Format as "YYYY-MM"
+}
+export const monthNames: string[] = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];

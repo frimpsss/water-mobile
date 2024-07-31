@@ -33,7 +33,7 @@ const Payments = () => {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.black[50],
+    backgroundColor: colors.white[50],
     flex: 1,
     paddingHorizontal: wp(20),
   },

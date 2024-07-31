@@ -106,7 +106,7 @@ const SignIn = ({ navigation }) => {
                   <InputField
                     id={"email"}
                     label={"Email"}
-                    placeholder={"John Mahama"}
+                    placeholder={"hello@example.com"}
                     type={"string"}
                     handleBlur={form.handleBlur("email")}
                     handleChange={form.handleChange("email")}

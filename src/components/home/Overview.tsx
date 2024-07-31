@@ -8,10 +8,11 @@ import HomeSectionsLayout from "./HomeSectionsLayout";
 import XAxisLabel from "./XAxisLabel";
 import useMeterReadingFilter from "@/hooks/useMeterReadingFilter";
 import useUserData from "@/hooks/useUserData";
+import _ from "lodash";
 const Overview = ({ navigation }) => {
   const { userData } = useUserData();
   const [activeCategory, setActiveCategory] = useState("H");
-  const categories = ["H", "D", "W", "M", "Y"];
+  const categories = ["H", "D", "W", "M"];
   const [viewWidth, setViewWidth] = useState(0);
   const [chartData, setChartData] = useState([]);
 
@@ -19,28 +20,28 @@ const Overview = ({ navigation }) => {
     meterId: userData?.meterId?._id,
     filter: activeCategory,
   });
-  const [max, setmax] = useState(10);
+  const [max, setmax] = useState(1);
 
   const onLayout = (event) => {
     const { width } = event.nativeEvent.layout;
     setViewWidth(width);
   };
   useEffect(() => {
-   if(data){
-    setChartData(() => {
-      return data?.map((e: any) => {
-        return {
-          value: e?.value,
-          labelComponent: () => <XAxisLabel text={e?.time} />,
-        };
+    if (data) {
+      setChartData(() => {
+        return data?.map((e: any) => {
+          return {
+            value: e?.value,
+            labelComponent: () => <XAxisLabel text={e?.time} />,
+          };
+        });
       });
-    });
 
-    if (!Number.isNaN(graphMax)) {
-      setmax(graphMax);
+      if (!Number.isNaN(graphMax)) {
+        setmax(graphMax);
+      }
     }
-   }
-  }, [data]);
+  }, [data, activeCategory]);
 
   return (
     <HomeSectionsLayout
@@ -54,7 +55,7 @@ const Overview = ({ navigation }) => {
             yAxisTextStyle={[font_styles.p2, styles.yaxisLabel]}
             xAxisIndicesWidth={10}
             data={chartData}
-            noOfSections={3}
+            noOfSections={5}
             maxValue={max}
             isAnimated
             areaChart
@@ -71,6 +72,7 @@ const Overview = ({ navigation }) => {
             yAxisThickness={0}
             dataPointsColor={colors.mantis[950]}
             xAxisLength={viewWidth - hp(40)}
+            showFractionalValues={true}
           />
         </View>
 

@@ -104,7 +104,7 @@ const Register = ({ navigation }: any) => {
                   <InputField
                     id={"name"}
                     label={"Name"}
-                    placeholder={"John Mahama"}
+                    placeholder={"Joe Doe"}
                     type={"string"}
                     handleBlur={form.handleBlur("name")}
                     handleChange={form.handleChange("name")}
@@ -113,7 +113,7 @@ const Register = ({ navigation }: any) => {
                   <InputField
                     id={"email"}
                     label={"Email"}
-                    placeholder={"John Mahama"}
+                    placeholder={"hello@example.com"}
                     type={"string"}
                     handleBlur={form.handleBlur("email")}
                     handleChange={form.handleChange("email")}

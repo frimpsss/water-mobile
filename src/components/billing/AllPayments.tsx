@@ -119,8 +119,7 @@ const AllPayments = ({ isRefetching, refetch, data, navigation }: props) => {
                           getMonthAndYear(e?.billId.billingPeriodStart).month
                         ]
                       }{" "}
-                      -{getMonthAndYear(e?.billId.billingPeriodStart).year}{' '}
-                      bill
+                      -{getMonthAndYear(e?.billId.billingPeriodStart).year} bill
                     </Text>
 
                     <Text

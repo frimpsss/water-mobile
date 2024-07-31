@@ -18,7 +18,7 @@ const BillingScreen = () => {
     <View style={[styles.screen]}>
       {isFetching && <ActivityIndicator />}
       {!isFetching && data?.data?.data?.length == 0 ? (
-        <EmptyStateComponent text="No Bills" />
+        <EmptyStateComponent text="No Bills found" />
       ) : (
         <BillList
           isRefetching={isRefetching}
@@ -31,7 +31,7 @@ const BillingScreen = () => {
 };
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: colors.black[50],
+    backgroundColor: colors.white[50],
     flex: 1,
     paddingHorizontal: wp(20),
   },

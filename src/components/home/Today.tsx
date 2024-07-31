@@ -8,7 +8,7 @@ import useMeterReadingFilter, {
 } from "@/hooks/useMeterReadingFilter";
 import useUserData from "@/hooks/useUserData";
 
-const Today = ({ navigation, title }: { navigation: any; title: string }) => {
+const Today = ({ navigation, title }: { navigation?: any; title?: string }) => {
   const { userData } = useUserData();
   const { todaysStats } = useMeterReadingFilter({
     meterId: userData?.meterId?._id,
@@ -21,7 +21,7 @@ const Today = ({ navigation, title }: { navigation: any; title: string }) => {
   useEffect(() => {
     setToday((p) => {
       return (
-        today || {
+        todaysStats || {
           amount: 0,
           volume: 0,
         }
@@ -47,7 +47,7 @@ const Today = ({ navigation, title }: { navigation: any; title: string }) => {
           </Text>
         </View>
         <View style={[styles.view, { paddingLeft: wp(10) }]}>
-          <Text style={[font_styles["h5"], styles.unit]}>Gal</Text>
+          <Text style={[font_styles["h5"], styles.unit]}>Liters</Text>
           <Text style={[font_styles["h2"], styles.value]} numberOfLines={1}>
             {Number(today?.volume)?.toFixed(2)}
           </Text>

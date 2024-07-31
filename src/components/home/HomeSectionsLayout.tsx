@@ -5,7 +5,7 @@ import { font_styles } from "../core/Text";
 import CustomAnimatedScale from "../core/ScaleView";
 import { ArrowRight2 } from "iconsax-react-native";
 interface props {
-  title: string;
+  title?: string;
   children: ReactNode;
   morePage: string;
   navigation: any;
@@ -20,7 +20,7 @@ const HomeSectionsLayout = ({
 }: props) => {
   return (
     <View style={styles.container} onLayout={onLayout}>
-      <View style={[styles.header]}>
+      {title && <View style={[styles.header]}>
         <Text style={[font_styles["p4"], styles.title]}>{title}</Text>
         {morePage && (
           <CustomAnimatedScale
@@ -34,7 +34,7 @@ const HomeSectionsLayout = ({
             <ArrowRight2 size={hp(15)} color={colors.white[400]} />
           </CustomAnimatedScale>
         )}
-      </View>
+      </View>}
       {children}
     </View>
   );
